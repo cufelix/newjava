@@ -818,8 +818,8 @@ import javax.swing.WindowConstants;
         		 x2enemy=i*5;
         	 
         	  }
-        	  g.setColor(new Color(45, 255-green, 45));
-        	    g.fillRect(i * 5, (int) (500 - (x / 1.5))+20, 5, (int) (x * 1.5)-20);
+        	//  g.setColor(new Color(45, 255-green, 45));
+        	 //   g.fillRect(i * 5, (int) (500 - (x / 1.5))+20, 5, (int) (x * 1.5)-20);
           
           }
             
