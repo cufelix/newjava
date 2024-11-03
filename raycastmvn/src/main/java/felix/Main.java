@@ -39,6 +39,8 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
 
+import static felix.components.Utils.loadImage;
+
 public class Main implements Runnable, MouseMotionListener, MouseListener, KeyListener {
     final static int killcode = 489765413;
     private static final int WIDTH = 1945, HEIGHT = 1200;
@@ -136,7 +138,8 @@ public class Main implements Runnable, MouseMotionListener, MouseListener, KeyLi
         }
 
         //main menu part
-        ImageIcon image3 = new ImageIcon("mainmenu.png");
+        //this.getClass().getResourceAsStream("mainmenu.png")
+        ImageIcon image3 = loadImage("mainmenu.png");
         JFrame framemenu = new JFrame("MAIN MENU");
         framemenu.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         framemenu.setLocationRelativeTo(null);
