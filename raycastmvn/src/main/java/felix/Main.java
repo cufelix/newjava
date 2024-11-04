@@ -67,7 +67,7 @@ public class Main implements Runnable, MouseMotionListener, MouseListener, KeyLi
     private static long lastFpsCheck = 0;
     private static int currentFps = 0;
     private static int totalFrames = 0;
-    private static BufferedImage texture01_1, texture01_2, texture01_3, texture01_4, texture01_5, texture01_6, texture01_7, texture01_8, texture02_1, texture02_2, texture02_3, texture02_4, texture02_5, texture02_6, texture02_7, texture02_8, texture03_1, texture03_2, texture03_3, texture03_4, texture03_5, texture03_6, texture03_7, texture03_8, texture04_1, texture04_2, texture04_3, texture04_4, texture04_5, texture04_6, texture04_7, texture04_8, texture05_1, texture05_2, texture05_3, texture05_4, texture05_5, texture05_6, texture05_7, texture05_8, texture06_1, texture06_2, texture06_3, texture06_4, texture06_5, texture06_6, texture06_7, texture06_8, texture07_1, texture07_2, texture07_3, texture07_4, texture07_5, texture07_6, texture07_7, texture07_8, texture08_1, texture08_2, texture08_3, texture08_4, texture08_5, texture08_6, texture08_7, texture08_8, texture09_1, texture09_2, texture09_3, texture09_4, texture09_5, texture09_6, texture09_7, texture09_8, enemy;
+    private static Image texture01_1, texture01_2, texture01_3, texture01_4, texture01_5, texture01_6, texture01_7, texture01_8, texture02_1, texture02_2, texture02_3, texture02_4, texture02_5, texture02_6, texture02_7, texture02_8, texture03_1, texture03_2, texture03_3, texture03_4, texture03_5, texture03_6, texture03_7, texture03_8, texture04_1, texture04_2, texture04_3, texture04_4, texture04_5, texture04_6, texture04_7, texture04_8, texture05_1, texture05_2, texture05_3, texture05_4, texture05_5, texture05_6, texture05_7, texture05_8, texture06_1, texture06_2, texture06_3, texture06_4, texture06_5, texture06_6, texture06_7, texture06_8, texture07_1, texture07_2, texture07_3, texture07_4, texture07_5, texture07_6, texture07_7, texture07_8, texture08_1, texture08_2, texture08_3, texture08_4, texture08_5, texture08_6, texture08_7, texture08_8, texture09_1, texture09_2, texture09_3, texture09_4, texture09_5, texture09_6, texture09_7, texture09_8, enemy;
     int[] PImage = {500, 297};
     boolean killavalible = false;
     int cislo = 1;
@@ -110,8 +110,8 @@ public class Main implements Runnable, MouseMotionListener, MouseListener, KeyLi
         frame1.setVisible(true);
 
 
-        image1 = new ImageIcon("FOVproject2.png").getImage();
-        image2 = new ImageIcon("FOVproject5.png").getImage();
+        image1 = loadImage("FOVproject2.png").getImage();
+        image2 = loadImage("FOVproject5.png").getImage();
 
         setupKeyBindings();
 
@@ -159,7 +159,7 @@ public class Main implements Runnable, MouseMotionListener, MouseListener, KeyLi
         button1.setFocusable(false);
         button1.addActionListener((e) -> {
             framemenu.dispose();
-            ImageIcon image4 = new ImageIcon("setuppage.png");
+            ImageIcon image4 = loadImage("setuppage.png");
             JFrame framesetup = new JFrame("MAIN SETUP");
             framesetup.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             framesetup.setLocationRelativeTo(null);
@@ -457,94 +457,90 @@ public class Main implements Runnable, MouseMotionListener, MouseListener, KeyLi
         }
     }
 
-    private static void loadTextures() {
-        try {
+    private static void loadTextures() throws IOException {
 
-            texture01_1 = ImageIO.read(new File("textura01_1.png"));
-            texture01_2 = ImageIO.read(new File("textura01_2.png"));
-            texture01_3 = ImageIO.read(new File("textura01_3.png"));
-            texture01_4 = ImageIO.read(new File("textura01_4.png"));
-            texture01_5 = ImageIO.read(new File("textura01_5.png"));
-            texture01_6 = ImageIO.read(new File("textura01_6.png"));
-            texture01_7 = ImageIO.read(new File("textura01_7.png"));
-            texture01_8 = ImageIO.read(new File("textura01_8.png"));
+        texture01_1 = loadImage("textura01_1.png").getImage();
+        texture01_2 = loadImage("textura01_2.png").getImage();
+        texture01_3 = loadImage("textura01_3.png").getImage();
+        texture01_4 = loadImage("textura01_4.png").getImage();
+        texture01_5 = loadImage("textura01_5.png").getImage();
+        texture01_6 = loadImage("textura01_6.png").getImage();
+        texture01_7 = loadImage("textura01_7.png").getImage();
+        texture01_8 = loadImage("textura01_8.png").getImage();
 
-            texture02_1 = ImageIO.read(new File("textura02_1.png"));
-            texture02_2 = ImageIO.read(new File("textura02_2.png"));
-            texture02_3 = ImageIO.read(new File("textura02_3.png"));
-            texture02_4 = ImageIO.read(new File("textura02_4.png"));
-            texture02_5 = ImageIO.read(new File("textura02_5.png"));
-            texture02_6 = ImageIO.read(new File("textura02_6.png"));
-            texture02_7 = ImageIO.read(new File("textura02_7.png"));
-            texture02_8 = ImageIO.read(new File("textura02_8.png"));
+        texture02_1 = loadImage("textura02_1.png").getImage();
+        texture02_2 = loadImage("textura02_2.png").getImage();
+        texture02_3 = loadImage("textura02_3.png").getImage();
+        texture02_4 = loadImage("textura02_4.png").getImage();
+        texture02_5 = loadImage("textura02_5.png").getImage();
+        texture02_6 = loadImage("textura02_6.png").getImage();
+        texture02_7 = loadImage("textura02_7.png").getImage();
+        texture02_8 = loadImage("textura02_8.png").getImage();
 
-            texture03_1 = ImageIO.read(new File("textura03_1.png"));
-            texture03_2 = ImageIO.read(new File("textura03_2.png"));
-            texture03_3 = ImageIO.read(new File("textura03_3.png"));
-            texture03_4 = ImageIO.read(new File("textura03_4.png"));
-            texture03_5 = ImageIO.read(new File("textura03_5.png"));
-            texture03_6 = ImageIO.read(new File("textura03_6.png"));
-            texture03_7 = ImageIO.read(new File("textura03_7.png"));
-            texture03_8 = ImageIO.read(new File("textura03_8.png"));
+        texture03_1 = loadImage("textura03_1.png").getImage();
+        texture03_2 = loadImage("textura03_2.png").getImage();
+        texture03_3 = loadImage("textura03_3.png").getImage();
+        texture03_4 = loadImage("textura03_4.png").getImage();
+        texture03_5 = loadImage("textura03_5.png").getImage();
+        texture03_6 = loadImage("textura03_6.png").getImage();
+        texture03_7 = loadImage("textura03_7.png").getImage();
+        texture03_8 = loadImage("textura03_8.png").getImage();
 
-            texture04_1 = ImageIO.read(new File("textura04_1.png"));
-            texture04_2 = ImageIO.read(new File("textura04_2.png"));
-            texture04_3 = ImageIO.read(new File("textura04_3.png"));
-            texture04_4 = ImageIO.read(new File("textura04_4.png"));
-            texture04_5 = ImageIO.read(new File("textura04_5.png"));
-            texture04_6 = ImageIO.read(new File("textura04_6.png"));
-            texture04_7 = ImageIO.read(new File("textura04_7.png"));
-            texture04_8 = ImageIO.read(new File("textura04_8.png"));
+        texture04_1 = loadImage("textura04_1.png").getImage();
+        texture04_2 = loadImage("textura04_2.png").getImage();
+        texture04_3 = loadImage("textura04_3.png").getImage();
+        texture04_4 = loadImage("textura04_4.png").getImage();
+        texture04_5 = loadImage("textura04_5.png").getImage();
+        texture04_6 = loadImage("textura04_6.png").getImage();
+        texture04_7 = loadImage("textura04_7.png").getImage();
+        texture04_8 = loadImage("textura04_8.png").getImage();
 
-            texture05_1 = ImageIO.read(new File("textura05_1.png"));
-            texture05_2 = ImageIO.read(new File("textura05_2.png"));
-            texture05_3 = ImageIO.read(new File("textura05_3.png"));
-            texture05_4 = ImageIO.read(new File("textura05_4.png"));
-            texture05_5 = ImageIO.read(new File("textura05_5.png"));
-            texture05_6 = ImageIO.read(new File("textura05_6.png"));
-            texture05_7 = ImageIO.read(new File("textura05_7.png"));
-            texture05_8 = ImageIO.read(new File("textura05_8.png"));
+        texture05_1 = loadImage("textura05_1.png").getImage();
+        texture05_2 = loadImage("textura05_2.png").getImage();
+        texture05_3 = loadImage("textura05_3.png").getImage();
+        texture05_4 = loadImage("textura05_4.png").getImage();
+        texture05_5 = loadImage("textura05_5.png").getImage();
+        texture05_6 = loadImage("textura05_6.png").getImage();
+        texture05_7 = loadImage("textura05_7.png").getImage();
+        texture05_8 = loadImage("textura05_8.png").getImage();
 
-            texture06_1 = ImageIO.read(new File("textura06_1.png"));
-            texture06_2 = ImageIO.read(new File("textura06_2.png"));
-            texture06_3 = ImageIO.read(new File("textura06_3.png"));
-            texture06_4 = ImageIO.read(new File("textura06_4.png"));
-            texture06_5 = ImageIO.read(new File("textura06_5.png"));
-            texture06_6 = ImageIO.read(new File("textura06_6.png"));
-            texture06_7 = ImageIO.read(new File("textura06_7.png"));
-            texture06_8 = ImageIO.read(new File("textura06_8.png"));
+        texture06_1 = loadImage("textura06_1.png").getImage();
+        texture06_2 = loadImage("textura06_2.png").getImage();
+        texture06_3 = loadImage("textura06_3.png").getImage();
+        texture06_4 = loadImage("textura06_4.png").getImage();
+        texture06_5 = loadImage("textura06_5.png").getImage();
+        texture06_6 = loadImage("textura06_6.png").getImage();
+        texture06_7 = loadImage("textura06_7.png").getImage();
+        texture06_8 = loadImage("textura06_8.png").getImage();
 
-            texture07_1 = ImageIO.read(new File("textura07_1.png"));
-            texture07_2 = ImageIO.read(new File("textura07_2.png"));
-            texture07_3 = ImageIO.read(new File("textura07_3.png"));
-            texture07_4 = ImageIO.read(new File("textura07_4.png"));
-            texture07_5 = ImageIO.read(new File("textura07_5.png"));
-            texture07_6 = ImageIO.read(new File("textura07_6.png"));
-            texture07_7 = ImageIO.read(new File("textura07_7.png"));
-            texture07_8 = ImageIO.read(new File("textura07_8.png"));
+        texture07_1 = loadImage("textura07_1.png").getImage();
+        texture07_2 = loadImage("textura07_2.png").getImage();
+        texture07_3 = loadImage("textura07_3.png").getImage();
+        texture07_4 = loadImage("textura07_4.png").getImage();
+        texture07_5 = loadImage("textura07_5.png").getImage();
+        texture07_6 = loadImage("textura07_6.png").getImage();
+        texture07_7 = loadImage("textura07_7.png").getImage();
+        texture07_8 = loadImage("textura07_8.png").getImage();
 
-            texture08_1 = ImageIO.read(new File("textura08_1.png"));
-            texture08_2 = ImageIO.read(new File("textura08_2.png"));
-            texture08_3 = ImageIO.read(new File("textura08_3.png"));
-            texture08_4 = ImageIO.read(new File("textura08_4.png"));
-            texture08_5 = ImageIO.read(new File("textura08_5.png"));
-            texture08_6 = ImageIO.read(new File("textura08_6.png"));
-            texture08_7 = ImageIO.read(new File("textura08_7.png"));
-            texture08_8 = ImageIO.read(new File("textura08_8.png"));
+        texture08_1 = loadImage("textura08_1.png").getImage();
+        texture08_2 = loadImage("textura08_2.png").getImage();
+        texture08_3 = loadImage("textura08_3.png").getImage();
+        texture08_4 = loadImage("textura08_4.png").getImage();
+        texture08_5 = loadImage("textura08_5.png").getImage();
+        texture08_6 = loadImage("textura08_6.png").getImage();
+        texture08_7 = loadImage("textura08_7.png").getImage();
+        texture08_8 = loadImage("textura08_8.png").getImage();
 
-            texture09_1 = ImageIO.read(new File("textura09_1.png"));
-            texture09_2 = ImageIO.read(new File("textura09_2.png"));
-            texture09_3 = ImageIO.read(new File("textura09_3.png"));
-            texture09_4 = ImageIO.read(new File("textura09_4.png"));
-            texture09_5 = ImageIO.read(new File("textura09_5.png"));
-            texture09_6 = ImageIO.read(new File("textura09_6.png"));
-            texture09_7 = ImageIO.read(new File("textura09_7.png"));
-            texture09_8 = ImageIO.read(new File("textura09_8.png"));
+        texture09_1 = loadImage("textura09_1.png").getImage();
+        texture09_2 = loadImage("textura09_2.png").getImage();
+        texture09_3 = loadImage("textura09_3.png").getImage();
+        texture09_4 = loadImage("textura09_4.png").getImage();
+        texture09_5 = loadImage("textura09_5.png").getImage();
+        texture09_6 = loadImage("textura09_6.png").getImage();
+        texture09_7 = loadImage("textura09_7.png").getImage();
+        texture09_8 = loadImage("textura09_8.png").getImage();
 
-            enemy = ImageIO.read(new File("enemy.png"));
-        } catch (IOException e) {
-            System.err.println("Error loading texture: " + e.getMessage());
-        }
+        enemy = loadImage("enemy.png").getImage();
 
     }
 
@@ -1035,8 +1031,7 @@ public class Main implements Runnable, MouseMotionListener, MouseListener, KeyLi
                         x2enemy = i * 5;
 
                     }
-                    g.setColor(new Color(45, 255 - green, 45));
-                    g.fillRect(i * 5, (int) (500 - (x / 1.5)) + 20, 5, (int) (x * 1.5) - 20);
+
 
                 }
 
