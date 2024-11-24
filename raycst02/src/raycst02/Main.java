@@ -543,22 +543,23 @@ import javax.swing.WindowConstants;
     private boolean checkCollisions() {
         for (int i = 0; i < numLines; i++) {
             if (Alines[i][0] == Alines[i][2]) {
-                int PLmousex = Alines[i][0] + 10;
-                int Mmousex = Alines[i][0] - 10;
-                if ((mousex < PLmousex && mousex >= (Alines[i][2] - 10)) || (mousex > Mmousex && mousex <= (Alines[i][2] + 10))) {
-                    if ((mousey > (Alines[i][1] - 10) && mousey < (Alines[i][3] + 10)) || (mousey < (Alines[i][1] + 10) && mousey > (Alines[i][3] - 10))) {
+                int PLmousex = Alines[i][0] + 5;
+                int Mmousex = Alines[i][0] - 5;
+                if ((mousex < PLmousex && mousex >= (Alines[i][2] - 5)) || (mousex > Mmousex && mousex <= (Alines[i][2] + 5))) {
+                    if ((mousey > (Alines[i][1] - 5) && mousey < (Alines[i][3] + 5)) || (mousey < (Alines[i][1] + 5) && mousey > (Alines[i][3] - 5))) {
                         mousex = pmousex;
+                        
+                        /**/ mousey = pmousey; 
                         return true;
-                        // mousey = pmousey; 
                     }
                 }
             }
             if (Alines[i][1] == Alines[i][3]) {
-                int PLmousey = Alines[i][1] + 10;
-                int Mmousey = Alines[i][1] - 10;
-                if ((mousey < PLmousey && mousey >= (Alines[i][3] - 10)) || (mousey > Mmousey && mousey <= (Alines[i][3] + 10))) {
-                    if ((mousex > (Alines[i][0] - 10) && mousex < (Alines[i][2] + 10)) || (mousex < (Alines[i][0] + 10) && mousex > (Alines[i][2] - 10))) {
-                      //  mousex = pmousex;
+                int PLmousey = Alines[i][1] + 5;
+                int Mmousey = Alines[i][1] - 5;
+                if ((mousey < PLmousey && mousey >= (Alines[i][3] - 5)) || (mousey > Mmousey && mousey <= (Alines[i][3] + 5))) {
+                    if ((mousex > (Alines[i][0] - 5) && mousex < (Alines[i][2] + 5)) || (mousex < (Alines[i][0] + 5) && mousex > (Alines[i][2] - 5))) {
+                      /**/  mousex = pmousex;
                           mousey = pmousey; 
                           return true;
                     }
