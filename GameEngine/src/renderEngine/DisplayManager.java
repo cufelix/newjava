@@ -7,27 +7,36 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.PixelFormat;
 
+
 public class DisplayManager {
-    static final int WIDTH = 1280;
-    static final int HEIGHT = 720;
-    private static final int FPS_C = 120;
-    public static void crateDisplay (){
-        ContextAttribs attribs = new ContextAttribs(3,2);
-        attribs.withForwardCompatible(true);
-        attribs.withProfileCore(true);
-        try{
-        Display.setDisplayMode(new DisplayMode(WIDTH,HEIGHT));
-        Display.create(new PixelFormat(),attribs);
+
+    private static final int WIDTH = 1280;
+    private static final int HEIGHT = 720;
+    private static final int FPS_CAP = 60;
+    private static final String TITLE = "Our First Display";
+
+
+    public static void createDisplay() {
+        ContextAttribs attribs = new ContextAttribs(3, 2).withForwardCompatible(true).withProfileCore(true);
+        try {
+            Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
+            Display.create(new PixelFormat(), attribs);
+            Display.setTitle(TITLE);
         } catch (LWJGLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-        GL11.glViewport(0,0,WIDTH,HEIGHT);
+        GL11.glViewport(0, 0, WIDTH, HEIGHT);
     }
-    public static void  updateDisplay(){
-        Display.sync(FPS_C);
+
+
+    public static void updateDisplay() {
+        Display.sync(FPS_CAP);
         Display.update();
     }
-    public static void closeDisplay(){
+
+
+    public static void closeDisplay() {
         Display.destroy();
     }
+
 }
