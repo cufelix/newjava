@@ -28,25 +28,34 @@ public class OBJLoader {
         int[] indicesArray = null;
 
         try {
-            while (true) {
-                line = reader.readLine();
-                String[] currentLine = line.split(" ");
-                if (line.startsWith("v")) {//it also may be "v "
-                    Vector3f vertex = new Vector3f(Float.parseFloat(currentLine[1]), Float.parseFloat(currentLine[2]), Float.parseFloat(currentLine[3]));
-                    vertices.add(vertex);
-                } else if (line.startsWith("vt ")) {
-                    Vector2f texture = new Vector2f(Float.parseFloat(currentLine[1]), Float.parseFloat(currentLine[2]));
-                    textures.add(texture);
-                } else if (line.startsWith("vn ")) {
-                    Vector3f normal = new Vector3f(Float.parseFloat(currentLine[1]), Float.parseFloat(currentLine[2]), Float.parseFloat(currentLine[3]));
-                    normals.add(normal);
 
-                } else if (line.startsWith("f ")) {
-                    textureArray = new float[vertices.size() * 2];
-                    normalsArray = new float[vertices.size() * 3];
-                    break;
+
+                while (true) {
+                    line = reader.readLine();
+                    String[] currentLine = line.split(" ");
+                    try{
+                    if (line.startsWith("v")) {//it also may be "v "
+                        Vector3f vertex = new Vector3f(Float.parseFloat(currentLine[1]), Float.parseFloat(currentLine[2]), Float.parseFloat(currentLine[3]));
+                        vertices.add(vertex);
+                    } } catch (Exception e) {
+                        System.out.println("kurva");
+                        e.printStackTrace();
+                    } if (line.startsWith("vt ")) {
+                        Vector2f texture = new Vector2f(Float.parseFloat(currentLine[1]), Float.parseFloat(currentLine[2]));
+                        textures.add(texture);
+                    } else if (line.startsWith("vn ")) {
+
+                        Vector3f normal = new Vector3f(Float.parseFloat(currentLine[1]), Float.parseFloat(currentLine[2]), Float.parseFloat(currentLine[3]));
+                        normals.add(normal);
+
+                    } else  if (line.startsWith("f ")) {
+                        textureArray = new float[vertices.size() * 2];
+                        normalsArray = new float[vertices.size() * 3];
+                        break;
+                    }
+
                 }
-            }
+
             while (line != null) {
                 if (!line.startsWith("f ")) {
                     line = reader.readLine();
@@ -64,7 +73,7 @@ public class OBJLoader {
             reader.close();
         } catch (Exception e) {
             System.out.println("Yo nigga your shit doesn't work fucking nigga make this shit work!!!!");
-            e.printStackTrace();
+           e.printStackTrace();
         }
         verticesArray = new float[vertices.size() * 3];
         indicesArray = new  int[indices.size()];
