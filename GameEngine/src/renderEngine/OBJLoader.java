@@ -3,6 +3,7 @@ package renderEngine;
 import models.RawModel;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,7 +35,7 @@ public class OBJLoader {
                     line = reader.readLine();
                     String[] currentLine = line.split(" ");
                     try{
-                    if (line.startsWith("v")) {//it also may be "v "
+                    if (line.startsWith("v ")) {//it also may be "v "
                         Vector3f vertex = new Vector3f(Float.parseFloat(currentLine[1]), Float.parseFloat(currentLine[2]), Float.parseFloat(currentLine[3]));
                         vertices.add(vertex);
                     } } catch (Exception e) {
