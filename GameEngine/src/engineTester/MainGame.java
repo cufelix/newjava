@@ -31,14 +31,14 @@ public class MainGame {
 
         RawModel model = null;
         try {
-            model = OBJLoader.loadObjModel("stall",loader);
+            model = OBJLoader.loadObjModel("dragon",loader);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        TexturedModel staticModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("stallTexture")));
+        TexturedModel staticModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("formulaT")));
 
-        Entity entity = new Entity(staticModel, new Vector3f(0, -2, -15), 0, 0, 0, 1);
+        Entity entity = new Entity(staticModel, new Vector3f(0, -5, -25), 0, 0, 0, 1);
 
         Camera camera = new Camera();
 

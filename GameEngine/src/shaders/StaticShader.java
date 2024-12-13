@@ -1,6 +1,7 @@
 package shaders;
 
 
+import entities.Light;
 import org.lwjgl.util.vector.Matrix4f;
 
 
@@ -18,6 +19,8 @@ public class StaticShader extends ShaderProgram{
     private int location_transformationMatrix;
     private int location_projectionMatrix;
     private int location_viewMatrix;
+    private int location_lightPosition;
+    private int location_lightColour;
 
 
     public StaticShader() {
@@ -30,13 +33,15 @@ public class StaticShader extends ShaderProgram{
         super.bindAttribute(0, "position");
         super.bindAttribute(1, "textureCoordinates");
     }
-
+//4:43
 
     @Override
     protected void getAllUniformLocations() {
         location_transformationMatrix = super.getUniformLocation("transformationMatrix");
         location_projectionMatrix = super.getUniformLocation("projectionMatrix");
         location_viewMatrix = super.getUniformLocation("viewMatrix");
+        location_lightPosition = super.getUniformLocation("lightPosition");
+        location_lightColour = super.getUniformLocation("lightColour");
 
     }
 
@@ -51,6 +56,11 @@ public class StaticShader extends ShaderProgram{
 
     public void loadProjectionMatrix(Matrix4f projection){
         super.loadMatrix(location_projectionMatrix, projection);
+    }
+    public void loadLight(Light light){
+        super.loadVector(location_lightPosition, light.getPosition());;
+        super.loadVector(location_lightColour, light.getColour());
+
     }
 
 
