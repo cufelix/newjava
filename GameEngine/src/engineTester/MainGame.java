@@ -3,6 +3,7 @@ package engineTester;
 
 import entities.Camera;
 import entities.Entity;
+import entities.Light;
 import models.RawModel;
 import models.TexturedModel;
 import org.lwjgl.opengl.Display;
@@ -37,9 +38,11 @@ public class MainGame {
         }
 
         TexturedModel staticModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("formulaT")));
+        Vector3f vecpo = new Vector3f(0,0,-20);
+        Vector3f vecco = new Vector3f(0,0,0);
 
         Entity entity = new Entity(staticModel, new Vector3f(0, -5, -25), 0, 0, 0, 1);
-
+        Light light = new Light(vecpo,vecco);
         Camera camera = new Camera();
 
         while (!Display.isCloseRequested()) {
@@ -47,6 +50,7 @@ public class MainGame {
             camera.move();
             renderer.prepare();
             shader.start();
+            shader.loadLight(light);
             shader.loadViewMatrix(camera);
             renderer.render(entity, shader);
             shader.stop();

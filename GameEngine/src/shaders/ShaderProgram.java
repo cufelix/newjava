@@ -14,7 +14,6 @@ import java.nio.FloatBuffer;
 
 
 public abstract class ShaderProgram {
-
     private static final FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
     private final int programID;
     private final int vertexShaderID;
