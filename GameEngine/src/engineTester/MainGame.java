@@ -38,11 +38,14 @@ public class MainGame {
         }
 
         TexturedModel staticModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("stallTexture")));
+        ModelTexture texture = staticModel.getTexture();
+        texture.setShineDamper(10);
+        texture.setReflectivity(1);
         Vector3f vecpo = new Vector3f(0,0,-20);
-        Vector3f vecco = new Vector3f(0,0,0);
+        Vector3f vecco = new Vector3f(1,1,1);
 
         Entity entity = new Entity(staticModel, new Vector3f(0, -5, -50), 0, 0, 0, 1);
-        Light light = new Light(new Vector3f(1,1,1), new Vector3f(0,0,-20));
+        Light light = new Light(vecco, vecpo);
         Camera camera = new Camera();
 
         while (!Display.isCloseRequested()) {
