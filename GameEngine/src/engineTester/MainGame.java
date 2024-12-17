@@ -32,17 +32,17 @@ public class MainGame {
 
         RawModel model = null;
         try {
-            model = OBJLoader.loadObjModel("dragon",loader);
+            model = OBJLoader.loadObjModel("stall",loader);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        TexturedModel staticModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("formulaT")));
+        TexturedModel staticModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("stallTexture")));
         Vector3f vecpo = new Vector3f(0,0,-20);
         Vector3f vecco = new Vector3f(0,0,0);
 
-        Entity entity = new Entity(staticModel, new Vector3f(0, -5, -25), 0, 0, 0, 1);
-        Light light = new Light(vecpo,vecco);
+        Entity entity = new Entity(staticModel, new Vector3f(0, -5, -50), 0, 0, 0, 1);
+        Light light = new Light(new Vector3f(1,1,1), new Vector3f(0,0,-20));
         Camera camera = new Camera();
 
         while (!Display.isCloseRequested()) {
