@@ -73,6 +73,7 @@ public class OBJLoader {
             }
             reader.close();
         } catch (Exception e) {
+           // e.printStackTrace();
             System.out.println("Yo nigga your shit doesn't work fucking nigga make this shit work!!!!");
            e.printStackTrace();
         }

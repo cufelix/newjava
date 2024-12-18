@@ -16,7 +16,7 @@ void main(void){
     vec3 unitNormal = normalize(surfaceNormal);
     vec3 unitLightVector = normalize(toLightVector);
     float nDotl = dot(unitNormal,unitLightVector);
-    float brightness = max(nDotl,0.0);
+    float brightness = max(nDotl,0.2);
     vec3 diffuse = brightness * lightColour;
 
     vec3 unitVectorToCamera = normalize(toCameraVector);
@@ -24,7 +24,7 @@ void main(void){
     vec3 reflectedLightDirection = reflect(lightDirection,unitNormal);
 
     float lesklost = dot(reflectedLightDirection,unitVectorToCamera);
-    lesklost = max(lesklost,0.0);
+    lesklost = max(lesklost,0.2);
     float damperF = pow(lesklost,shineDamper);
     vec3 finalSpecular = damperF*lightColour*reflectivity;
 

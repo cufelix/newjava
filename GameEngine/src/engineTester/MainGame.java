@@ -10,6 +10,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
+import renderEngine.MasterRender;
 import renderEngine.OBJLoader;
 import renderEngine.Renderer;
 import shaders.StaticShader;
@@ -26,13 +27,11 @@ public class MainGame {
 
         DisplayManager.createDisplay();
         Loader loader = new Loader();
-        StaticShader shader = new StaticShader();
-        Renderer renderer = new Renderer(shader);
 
 
         RawModel model = null;
         try {
-            model = OBJLoader.loadObjModel("stall",loader);
+            model = OBJLoader.loadObjModel("formula",loader);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -44,24 +43,20 @@ public class MainGame {
         Vector3f vecpo = new Vector3f(0,0,-20);
         Vector3f vecco = new Vector3f(1,1,1);
 
-        Entity entity = new Entity(staticModel, new Vector3f(0, -5, -50), 0, 0, 0, 1);
+        Entity entity = new Entity(staticModel, new Vector3f(0, -5, -650), 0, 0, 0, 1);
         Light light = new Light(vecco, vecpo);
         Camera camera = new Camera();
-
+        MasterRender Mrenderer = new MasterRender();
         while (!Display.isCloseRequested()) {
-            entity.increaseRotation(0, 1, 0);
+          //  entity.increaseRotation(0, 0, 0);
             camera.move();
-            renderer.prepare();
-            shader.start();
-            shader.loadLight(light);
-            shader.loadViewMatrix(camera);
-            renderer.render(entity, shader);
-            shader.stop();
+            Mrenderer.processEntity(entity);
+            Mrenderer.render(light,camera);
             DisplayManager.updateDisplay();
         }
 
 
-        shader.cleanUp();
+        Mrenderer.CleanUp();
         loader.cleanUp();
         DisplayManager.closeDisplay();
     }
