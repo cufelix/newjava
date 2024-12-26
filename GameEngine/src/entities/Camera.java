@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 
 public class Camera {
 
-    private final Vector3f position = new Vector3f(25, 2, 50);
+    private final Vector3f position = new Vector3f(800, 2, 402);
     private float pitch;
     private float yaw;
     private float roll;
@@ -20,22 +20,22 @@ public class Camera {
 
     public void move() {
         if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
-            position.z -= 0.05f;
+            position.z -= 0.55f;
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
-            position.x += 0.04f;
+            position.x += 0.55f;
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
-            position.x -= 0.04f;
+            position.x -= 0.55f;
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
-            position.z += 0.05f;
+            position.z += 0.55f;
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-            position.y += 0.04f;
+            position.y += 0.06f;
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_E)) {
-            position.y -= 0.04f;
+            position.y -= 0.06f;
         }
 
     }

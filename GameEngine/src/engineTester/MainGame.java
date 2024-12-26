@@ -18,6 +18,9 @@ import terains.Terain;
 import textures.ModelTexture;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 
 public class MainGame {
@@ -32,19 +35,23 @@ public class MainGame {
 
         RawModel model = null;
         try {
-            model = OBJLoader.loadObjModel("stall",loader);
+            model = OBJLoader.loadObjModel("fern",loader);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        TexturedModel staticModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("stallTexture")));
-        ModelTexture texture = staticModel.getTexture();
-        texture.setShineDamper(10);
-        texture.setReflectivity(0.4f);
-        Vector3f vecpo = new Vector3f(6000,4000,4000);
+        TexturedModel fern = new TexturedModel(model, new ModelTexture(loader.loadTexture("fern")));
+        fern.getTexture().setHasTransparency(true);
+        fern.getTexture().setNeedMoreFakeLight(true);
+        Vector3f vecpo = new Vector3f(20000,20000,2000);
         Vector3f vecco = new Vector3f(1,1,1);
 
-        Entity entity = new Entity(staticModel, new Vector3f(50, 0, 15), 0, 0, 0, 1);
+        List<Entity> entities = new ArrayList<Entity>();
+        Random random = new Random();
+        for(int i=0;i<500;i++){
+            entities.add(new Entity(fern, new Vector3f(random.nextFloat(1599) ,0,random.nextFloat(804) ),0,0,0,3));
+        }
+
         Light light = new Light(vecco, vecpo);
 
         Terain terrain1= new Terain(0,0,loader,new ModelTexture(loader.loadTexture("grass")));
@@ -53,13 +60,17 @@ public class MainGame {
         Camera camera = new Camera();
         MasterRender Mrenderer = new MasterRender();
         while (!Display.isCloseRequested()) {
-            entity.increaseRotation(0, 1, 0);
+
             camera.move();
+
             Mrenderer.processTerrain(terrain1);
             Mrenderer.processTerrain(terrain2);
-            Mrenderer.processEntity(entity);
-            Mrenderer.render(light,camera);
+            for(Entity entity:entities){
+                Mrenderer.processEntity(entity);
+            }
+            Mrenderer.render(light, camera);
             DisplayManager.updateDisplay();
+
         }
 
 

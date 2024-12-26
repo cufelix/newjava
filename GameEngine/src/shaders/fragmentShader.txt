@@ -27,7 +27,10 @@ void main(void){
     lesklost = max(lesklost,0.2);
     float damperF = pow(lesklost,shineDamper);
     vec3 finalSpecular = damperF*lightColour*reflectivity;
-
+    vec4 textureColour =texture(modelTexture,pass_textureCoordinates);
+    if(textureColour.a<0.5){
+        discard;
+    }
 
 	out_Color = vec4(diffuse,1.0) * texture(modelTexture,pass_textureCoordinates)+vec4(finalSpecular,1.0);
 
