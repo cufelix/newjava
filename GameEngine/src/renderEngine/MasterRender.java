@@ -23,9 +23,9 @@ public class MasterRender {
     private static final float FAR_PLANE = 1000;
     private Matrix4f projectionMatrix;
 
-    private static final float BLUE = 0.5f;
-    private static final float RED = 0.5f;
-    private static final float GREEN = 0.5f;
+    private static final float BLUE = 0.88f;
+    private static final float RED = 0.7f;
+    private static final float GREEN = 0.7f;
 
     private StaticShader shader= new StaticShader();
     private EntityRenderer renderer ;

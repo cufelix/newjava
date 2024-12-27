@@ -35,14 +35,20 @@ public class MainGame {
 
         RawModel model = null;
         try {
-            model = OBJLoader.loadObjModel("fern",loader);
+            model = model = OBJLoader.loadObjModel("fern",loader);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        TexturedModel fern = new TexturedModel(model, new ModelTexture(loader.loadTexture("fern")));
+        fern.getTexture().setHasTransparency(true);
+        fern.getTexture().setNeedMoreFakeLight(true);
+        TexturedModel tree = null;
+        try {
+            tree = new TexturedModel(OBJLoader.loadObjModel("tree",loader),new ModelTexture(loader.loadTexture("tree")));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        TexturedModel fern = new TexturedModel(model, new ModelTexture(loader.loadTexture("fern")));
-        fern.getTexture().setHasTransparency(true);
-        fern.getTexture().setNeedMoreFakeLight(true);
         Vector3f vecpo = new Vector3f(20000,20000,2000);
         Vector3f vecco = new Vector3f(1,1,1);
 
@@ -50,7 +56,13 @@ public class MainGame {
         Random random = new Random();
         for(int i=0;i<500;i++){
             entities.add(new Entity(fern, new Vector3f(random.nextFloat(1599) ,0,random.nextFloat(804) ),0,0,0,3));
+            if(i==1){
+                for(int j=0;j<70;j++){
+                    entities.add(new Entity(tree, new Vector3f(random.nextFloat(1599) ,0,random.nextFloat(804) ),0,0,0,3));
+                }
+            }
         }
+
 
         Light light = new Light(vecco, vecpo);
 
@@ -68,6 +80,7 @@ public class MainGame {
             for(Entity entity:entities){
                 Mrenderer.processEntity(entity);
             }
+
             Mrenderer.render(light, camera);
             DisplayManager.updateDisplay();
 
