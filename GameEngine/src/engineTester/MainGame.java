@@ -16,6 +16,8 @@ import renderEngine.EntityRenderer;
 import shaders.StaticShader;
 import terains.Terain;
 import textures.ModelTexture;
+import textures.TerrainTexture;
+import textures.TerrainTexturePack;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -31,6 +33,14 @@ public class MainGame {
 
         DisplayManager.createDisplay();
         Loader loader = new Loader();
+
+        TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("grass"));
+        TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("mud"));
+        TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("path"));
+        TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("grassFlowers"));
+
+        TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture,rTexture,bTexture,gTexture);
+        TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
 
 
         RawModel model = null;
@@ -66,8 +76,8 @@ public class MainGame {
 
         Light light = new Light(vecco, vecpo);
 
-        Terain terrain1= new Terain(0,0,loader,new ModelTexture(loader.loadTexture("grass")));
-        Terain terrain2= new Terain(1,0,loader,new ModelTexture(loader.loadTexture("grass")));
+        Terain terrain1= new Terain(0,0,loader,texturePack,blendMap);
+        Terain terrain2= new Terain(1,0,loader,texturePack,blendMap);
 
         Camera camera = new Camera();
         MasterRender Mrenderer = new MasterRender();

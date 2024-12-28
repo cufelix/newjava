@@ -94,7 +94,7 @@ public abstract class ShaderProgram {
 
     protected void loadBoolean(int location, boolean value) {
         float toLoad = 0;
-        if (value) {
+        if (value) {//13:53
             toLoad = 1;
         }
         GL20.glUniform1f(location, toLoad);
@@ -104,6 +104,9 @@ public abstract class ShaderProgram {
         matrix.store(matrixBuffer);
         matrixBuffer.flip();
         GL20.glUniformMatrix4(location, false, matrixBuffer);
+    }
+    protected  void loadInt (int location,int value){
+        GL20.glUniform1i(location, value);
     }
 
 
