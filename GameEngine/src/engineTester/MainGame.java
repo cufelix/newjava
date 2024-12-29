@@ -84,13 +84,13 @@ public class MainGame {
         MasterRender Mrenderer = new MasterRender();
         TexturedModel dragonT;
         try {
-            RawModel dragon = OBJLoader.loadObjModel("dragon", loader);
+            RawModel dragon = OBJLoader.loadObjModel("man4", loader);
             dragonT = new TexturedModel(dragon, new ModelTexture(loader.loadTexture("mud")));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        Player player = new Player(dragonT, new Vector3f(800, 3, 200), 0, 0, 0, 4);
+        Player player = new Player(dragonT, new Vector3f(800, 30, 200), 0, 0, 0, 3.5f);
 
 
         while (!Display.isCloseRequested()) {
