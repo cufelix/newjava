@@ -35,6 +35,7 @@ public class Player extends Entity{
         super.increasePosition(dx,0,dz);
         upSpeed +=Gravity*DisplayManager.getFrameTimeSeconds();
         super.increasePosition(0,upSpeed*DisplayManager.getFrameTimeSeconds(),0);
+
         if(super.getPosition().y<heightT){
             upSpeed=0;
             super.getPosition().y =heightT;

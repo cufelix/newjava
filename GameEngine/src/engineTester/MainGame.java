@@ -65,8 +65,8 @@ public class MainGame {
 
         List<Entity> entities = new ArrayList<Entity>();
         Random random = new Random();
-        for (int i = 0; i < 500; i++) {
-            entities.add(new Entity(fern, new Vector3f(random.nextFloat(1599), 0, random.nextFloat(804)), 0, 0, 0, 2));
+        for (int i = 0; i < 1000; i++) {
+            entities.add(new Entity(fern, new Vector3f(random.nextFloat(1599), 0, random.nextFloat(804)), 0, 0, 0, 1));
             if (i == 1) {
                 for (int j = 0; j < 150; j++) {
                     entities.add(new Entity(tree, new Vector3f(random.nextFloat(1599), 0, random.nextFloat(804)), 0, 0, 0, 2));
@@ -80,7 +80,7 @@ public class MainGame {
         Terain terrain1 = new Terain(0, 0, loader, texturePack, blendMap);
         Terain terrain2 = new Terain(1, 0, loader, texturePack, blendMap);
 
-        Camera camera = new Camera();
+
         MasterRender Mrenderer = new MasterRender();
         TexturedModel dragonT;
         try {
@@ -90,11 +90,11 @@ public class MainGame {
             throw new RuntimeException(e);
         }
 
-        Player player = new Player(dragonT, new Vector3f(800, 30, 200), 0, 0, 0, 2);
+        Player player = new Player(dragonT, new Vector3f(800, 30, 200), 0, 0, 0, 1);
 
-
+        Camera camera = new Camera(player);
         while (!Display.isCloseRequested()) {
-           // camera.move();
+            camera.move();
             player.move();
 
             Mrenderer.processEntity(player);

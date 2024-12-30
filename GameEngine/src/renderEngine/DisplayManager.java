@@ -44,7 +44,7 @@ public class DisplayManager {
     }
     public static float getFrameTimeSeconds(){
 
-        System.out.println(delta);
+      //  System.out.println(delta);
         return delta;
     }
 
