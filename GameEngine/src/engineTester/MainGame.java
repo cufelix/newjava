@@ -77,8 +77,8 @@ public class MainGame {
 
         Light light = new Light(vecco, vecpo);
 
-        Terain terrain1 = new Terain(0, 0, loader, texturePack, blendMap);
-        Terain terrain2 = new Terain(1, 0, loader, texturePack, blendMap);
+        Terain terrain1 = new Terain(0, 0, loader, texturePack, blendMap,"heightmap");
+        Terain terrain2 = new Terain(1, 0, loader, texturePack, blendMap,"heightmap");
 
 
         MasterRender Mrenderer = new MasterRender();
