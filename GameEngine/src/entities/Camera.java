@@ -8,12 +8,12 @@ import org.lwjgl.util.vector.Vector3f;
 public class Camera {
 
     private  final Vector3f  position = new Vector3f(800, 35, 402);
-    private float pitch= 18;
+    private float pitch= 20;
     private float yaw;
     private float roll;
 
     private Player player ;
-    private float playerToCamDist = 60;
+    private float playerToCamDist = 22;
     private float playerAngleA =0;
 
     public Camera(Player player) {
@@ -92,7 +92,7 @@ public class Camera {
         float offsetZ =(float) (hDist *Math.cos(Math.toRadians((theta))));
         position.x = player.getPosition().x - offsetX;
         position.z = player.getPosition().z - offsetZ;
-        position.y = player.getPosition().y+ vDist;
+        position.y = player.getPosition().y+ vDist+10;
      //   System.out.println(position.y);
     }
 

@@ -184,6 +184,7 @@ import javax.swing.WindowConstants;
 			ImageIcon image4 = new ImageIcon("setuppage.png");
 	    	JFrame framesetup = new JFrame("MAIN SETUP");
 	    	framesetup.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+			framesetup.setResizable(false);
 	    	framesetup.setLocationRelativeTo(null);
 	    	framesetup.setSize(500, 500);
 	    	
@@ -234,8 +235,32 @@ import javax.swing.WindowConstants;
 		button2.setFocusable(false);
 		button2.addActionListener((e)->{
 			
-	//		System.out.println("nana");
+			ImageIcon image5 = new ImageIcon("rulespage.png");
+	    	JFrame framerules = new JFrame("RULES");
+	    	framerules.setLocationRelativeTo(null);
 			
+	    	framerules.setSize(500, 500);
+			framerules.setResizable(false);
+	    	
+	    	 JLabel label3=new JLabel();
+	         label3.setBounds(0, 0, 500, 500);
+	 		label3.setIcon(image5);
+	 		
+	 		JButton buttonHome = new JButton("Home");
+	 		buttonHome.setBounds(175, 300, 150, 50);
+			buttonHome.setBackground(new Color(200,200,250));
+			buttonHome.setFocusable(false);
+			buttonHome.addActionListener((e1)->{
+				
+				
+				
+				framerules.dispose();
+				
+			});
+
+			label3.add(buttonHome);
+	 		framerules.add(label3);
+	    	framerules.setVisible(true);
 		});
 		
 		label.add(button1);
@@ -338,86 +363,51 @@ import javax.swing.WindowConstants;
         Thread thread4 = new Thread(()->{
        
         	 
-        	   //  JFrame frame;
-        	   //  JPanel panel;
-        	   //  JLabel wheel;
-        	     Socket socket = null;///
-        	    ///
-        	     ///
+        	  
+        	     Socket socket = null;
+        	    
         	Scanner scannerip = new Scanner(System.in);
-     //   System.out.println("Enter ip or if on this pc is running server type 'localhost'");
+     
         	
         	        try {
 						socket = new Socket( ip, 5000);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}///
+					}
         	        try {
 						output = new DataOutputStream(socket.getOutputStream());
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}///
+					}
         	        try {
 						input = new DataInputStream(socket.getInputStream());
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
-					} ///
+					} 
 
-        	 //       frame = new JFrame("Wheel Sync Client");
-        	  //     panel = new JPanel() {
-        	       //     @Override
-        	    //        protected void paintComponent(Graphics g) {
-        	    //            super.paintComponent(g);
-        	   //             g.setColor(Color.RED);
-        	    //            g.fillOval(x, y, 50, 50);
-        	     //      }
-        	     //   };
-        	  //     panel.setPreferredSize(new Dimension(400, 400));
-        	    //    panel.setBackground(Color.WHITE);
-
-        	   //     frame.add(panel);
-        	    //   frame.pack();
-        	    //    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        	     //   frame.setVisible(true);
-
-        	     //   panel.addMouseMotionListener(new MouseMotionAdapter() {
-        	        //    @Override
-        	        //    public void mouseDragged(MouseEvent e) {
-        	           //     x = e.getX() - 25;
-        	          //      y = e.getY() - 25;
-        	            //   panel.repaint();
-
-        	      
-        	     //   });
-
+        	
         	        new Thread(() -> {                                        //prijem
-        	            try {//prijem
-        	                while (true) {//prijem
-        	                    if (input.available() > 0) {//prijem
+        	            try {
+        	                while (true) {
+        	                    if (input.available() > 0) {
         	                    	int sentx;
-        	                        sentx = input.readInt();//prijem
-        	                        yctverce = input.readInt();//prijem
+        	                        sentx = input.readInt();
+        	                        yctverce = input.readInt();
         	                        if(sentx==killcode) {
         	                        	alive=false;
-        	                      // 	System.out.println("alive is  "+alive);
-        	                        	
         	                        }else {
         	                        xctverce = sentx;
         	                        }
-        	                        SwingUtilities.invokeLater(() -> {//prijem
-        	                      //      x = newX;
-        	                       //   y = newY;
-        	                      //      panel.repaint();
-        	                        });//prijem
-        	                    }//prijem
-        	                }//prijem
-        	            } catch (IOException ex) {//prijem
-        	                ex.printStackTrace();//prijem
-        	            }//prijem
-        	        }).start();//prijem
+        	                       // SwingUtilities.invokeLater(() -> {
+        	                   //
+        	                      //  });
+        	                    }
+        	                }
+        	            } catch (IOException ex) {
+        	                ex.printStackTrace();
+        	            }
+        	        }).start();
         	        while(true) {
         	        	if(mousex!=pmousex || mousey!=pmousey||kill) {
         	        		int sendx = mousex;
@@ -427,13 +417,13 @@ import javax.swing.WindowConstants;
         	        			myscore++;
         	        		}
         	        	
-    	                try {                                          //odesilani
-    	                    output.writeInt(sendx);                        //odesilani 
-    	                    output.writeInt(mousey);                        //odesilani 
-    	                } catch (IOException ex) {                     //odesilani 
-    	                    ex.printStackTrace();                      //odesilani 
-    	                }   
-        	        	}//odesilani 
+							try {                                          
+								output.writeInt(sendx);                         
+								output.writeInt(mousey);                         
+							} catch (IOException ex) {                      
+								ex.printStackTrace();                       
+							}   
+        	        	} 
     	            }
         	
         });
