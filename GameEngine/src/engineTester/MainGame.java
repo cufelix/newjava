@@ -59,29 +59,6 @@ public class MainGame {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-        Vector3f vecpo = new Vector3f(20000, 20000, 2000);
-        Vector3f vecco = new Vector3f(1, 1, 1);
-
-        List<Entity> entities = new ArrayList<Entity>();
-        Random random = new Random();
-        for (int i = 0; i < 1000; i++) {
-            entities.add(new Entity(fern, new Vector3f(random.nextFloat(1599), 0, random.nextFloat(804)), 0, 0, 0, 1));
-            if (i == 1) {
-                for (int j = 0; j < 150; j++) {
-                    entities.add(new Entity(tree, new Vector3f(random.nextFloat(1599), 0, random.nextFloat(804)), 0, 0, 0, 2));
-                }
-            }
-        }
-
-
-        Light light = new Light(vecco, vecpo);
-
-        Terain terrain1 = new Terain(0, 0, loader, texturePack, blendMap,"heightmap");
-        Terain terrain2 = new Terain(1, 0, loader, texturePack, blendMap,"heightmap");
-
-
-        MasterRender Mrenderer = new MasterRender();
         TexturedModel dragonT;
         try {
             RawModel dragon = OBJLoader.loadObjModel("man", loader);
@@ -89,14 +66,56 @@ public class MainGame {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
         Player player = new Player(dragonT, new Vector3f(800, 30, 200), 0, 0, 0, 1);
+        Terain terrain1 = new Terain(0, 0, loader, texturePack, blendMap,"heightmap");
+        Terain terrain2 = new Terain(1, 0, loader, texturePack, blendMap,"heightmap");
+        Vector3f vecpo = new Vector3f(20000, 20000, 2000);
+        Vector3f vecco = new Vector3f(1, 1, 1);
+
+        List<Entity> entities = new ArrayList<Entity>();
+        Random random = new Random();
+        float x,y,z;
+        for (int i = 0; i < 1000; i++) {
+             x= random.nextFloat(1599);
+             z=random.nextFloat(804);
+             if(x>800){
+                 y = terrain2.getHeightTerrain(x,z);
+             }else{
+             y = terrain1.getHeightTerrain(x,z);}
+            entities.add(new Entity(fern, new Vector3f(x,y,z), 0, random.nextFloat(804), 0, 1));
+            if (i == 1) {
+                for (int j = 0; j < 150; j++) {
+                    x= random.nextFloat(1599);
+                    z=random.nextFloat(804);
+                    if(x>800){
+                        y = terrain2.getHeightTerrain(x,z);
+                    }else{
+                        y = terrain1.getHeightTerrain(x,z);}
+                    entities.add(new Entity(tree,  new Vector3f(x,y,z), 0, random.nextFloat(804), 0, 1));
+                }
+            }
+        }
+
+
+        Light light = new Light(vecco, vecpo);
+
+
+
+
+        MasterRender Mrenderer = new MasterRender();
+
+
+
 
         Camera camera = new Camera(player);
         while (!Display.isCloseRequested()) {
             camera.move();
-            player.move();
-
+            if(player.getPosition().x>800){
+                player.move(terrain2);
+            }else{
+                player.move(terrain1);}
+            //player.move(terrain1);
+            System.out.println(player.getPosition().x);
             Mrenderer.processEntity(player);
             Mrenderer.processTerrain(terrain1);
             Mrenderer.processTerrain(terrain2);
@@ -114,5 +133,4 @@ public class MainGame {
         loader.cleanUp();
         DisplayManager.closeDisplay();
     }
-
 }

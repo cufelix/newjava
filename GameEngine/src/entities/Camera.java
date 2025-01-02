@@ -57,7 +57,7 @@ public class Camera {
         if (playerToCamDistOG>playerToCamDist && playerToCamDist<12){
             playerToCamDist =12;
         }
-        System.out.println(playerToCamDist);
+   //     System.out.println(playerToCamDist);
     }
 
     private void calculatePitch() {

@@ -1,11 +1,13 @@
 package terains;
 
 import models.RawModel;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.Loader;
 import textures.ModelTexture;
 import textures.TerrainTexture;
 import textures.TerrainTexturePack;
+import toolbox.Maths;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -22,6 +24,7 @@ public class Terain {
     private RawModel model;
     private TerrainTexturePack texturePack;
     private TerrainTexture blendMap;
+    private float [][] heights;
 
     public Terain(int gridX, int gridZ, Loader loader, TerrainTexturePack texturePack,TerrainTexture blendMap,String heightMap){
         this.texturePack = texturePack;
@@ -51,6 +54,33 @@ public class Terain {
         return blendMap;
     }
 
+    public float getHeightTerrain(float worldX,float worldZ){
+        float terrainX = worldX - this.x;
+        float terrainZ = worldZ - this.z;
+        float gridSquareSize = SIZE/((float)heights.length-1);
+        int gridX = (int) Math.floor(terrainX/gridSquareSize);
+        int gridZ = (int) Math.floor(terrainZ/gridSquareSize);
+        if(gridX>=heights.length-1||gridZ>=heights.length-1||gridX<0||gridZ<0) {
+            return 0;
+        }
+        float xCoord = (terrainX % gridSquareSize)/gridSquareSize;
+        float zCoord = (terrainZ % gridSquareSize)/gridSquareSize;
+        float result;
+        if (xCoord <= (1-zCoord)) {
+            result = Maths
+                    .barryCentric(new Vector3f(0, heights[gridX][gridZ], 0), new Vector3f(1,
+                            heights[gridX + 1][gridZ], 0), new Vector3f(0,
+                            heights[gridX][gridZ + 1], 1), new Vector2f(xCoord, zCoord));
+        } else {
+            result = Maths
+                    .barryCentric(new Vector3f(1, heights[gridX + 1][gridZ], 0), new Vector3f(1,
+                            heights[gridX + 1][gridZ + 1], 1), new Vector3f(0,
+                            heights[gridX][gridZ + 1], 1), new Vector2f(xCoord, zCoord));
+        }
+        return result;
+
+    }
+
     private RawModel generateTerrain(Loader loader, String heightMap){
         BufferedImage image = null;
         try {
@@ -61,6 +91,7 @@ public class Terain {
         int VERTEX_COUNT = image.getHeight();
 
         int count = VERTEX_COUNT * VERTEX_COUNT;
+        heights = new float[VERTEX_COUNT][VERTEX_COUNT];
         float[] vertices = new float[count * 3];
         float[] normals = new float[count * 3];
         float[] textureCoords = new float[count*2];
@@ -69,7 +100,9 @@ public class Terain {
         for(int i=0;i<VERTEX_COUNT;i++){
             for(int j=0;j<VERTEX_COUNT;j++){
                 vertices[vertexPointer*3] = (float)j/((float)VERTEX_COUNT - 1) * SIZE;
-                vertices[vertexPointer*3+1] = getHeight(j,i,image);
+                float height = getHeight(j,i,image);
+                heights[j][i]=height;
+                vertices[vertexPointer*3+1] = height;
                 vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * SIZE;
                 Vector3f normal = claculateNormal(j,i,image);
                 normals[vertexPointer*3] = normal.x;
