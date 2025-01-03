@@ -1,6 +1,7 @@
 package engineTester;
 
 
+import Multiplayer.ServerAndClient;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
@@ -20,16 +21,23 @@ import textures.ModelTexture;
 import textures.TerrainTexture;
 import textures.TerrainTexturePack;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 
 public class MainGame {
-
+    private static final int PORT = 6000;
 
     public static void main(String[] args) {
+
 
 
         DisplayManager.createDisplay();
@@ -99,7 +107,7 @@ public class MainGame {
 
         Light light = new Light(vecco, vecpo);
 
-
+       // ServerAndClient server = new ServerAndClient(player);
 
 
         MasterRender Mrenderer = new MasterRender();
@@ -108,14 +116,154 @@ public class MainGame {
 
 
         Camera camera = new Camera(player);
+        Thread multiplayer = new Thread(() -> {
+
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.print("Do you want to start the server? (Y/N): ");
+            String response = scanner.nextLine().trim().toUpperCase();
+
+            boolean isServer = response.equals("Y");
+
+            if (isServer) {
+                Thread serverThread = new Thread(() -> {
+                    try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+                        System.out.println("Server started and listening on port " + PORT);
+
+                        Socket client1 = serverSocket.accept();
+                        System.out.println("Client 1 connected");
+
+                        Socket client2 = serverSocket.accept();
+                        System.out.println("Client 2 connected");
+
+                        DataInputStream input1 = new DataInputStream(client1.getInputStream());
+                        DataOutputStream output1 = new DataOutputStream(client1.getOutputStream());
+
+                        DataInputStream input2 = new DataInputStream(client2.getInputStream());
+                        DataOutputStream output2 = new DataOutputStream(client2.getOutputStream());
+
+                        int prevX1 = 0, prevY1 = 0, prevZ1 = 0, prevW1 = 0;
+                        int prevX2 = 0, prevY2 = 0, prevZ2 = 0, prevW2 = 0;
+
+                        while (true) {
+                            if (input1.available() > 0) {
+                                int xs = input1.readInt();
+                                int ys = input1.readInt();
+                                int zs = input1.readInt();
+                                int ws = input1.readInt();
+                                if (xs != prevX1 || ys != prevY1 || zs != prevZ1 || ws != prevW1) {
+                                    prevX1 = xs;
+                                    prevY1 = ys;
+                                    prevZ1 = zs;
+                                    prevW1 = ws;
+                                    output2.writeInt(xs);
+                                    output2.writeInt(ys);
+                                    output2.writeInt(zs);
+                                    output2.writeInt(ws);
+                                }
+                            }
+
+                            if (input2.available() > 0) {
+                                int xs = input2.readInt();
+                                int ys = input2.readInt();
+                                int zs = input2.readInt();
+                                int ws = input2.readInt();
+                                if (xs != prevX2 || ys != prevY2 || zs != prevZ2 || ws != prevW2) {
+                                    prevX2 = xs;
+                                    prevY2 = ys;
+                                    prevZ2 = zs;
+                                    prevW2 = ws;
+                                    output1.writeInt(xs);
+                                    output1.writeInt(ys);
+                                    output1.writeInt(zs);
+                                    output1.writeInt(ws);
+                                }
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                serverThread.start();
+            }
+
+            Thread clientThread = new Thread(() -> {
+                String ip;
+                if (isServer) {
+                    ip = "localhost"; // Pokud je uživatel server, klient se připojí na localhost
+                    System.out.println("Client will connect to localhost.");
+                } else {
+                    System.out.print("Enter server IP: ");
+                    ip = scanner.nextLine();
+                }
+
+                try (Socket socket = new Socket(ip, PORT);
+                     DataInputStream input = new DataInputStream(socket.getInputStream());
+                     DataOutputStream output = new DataOutputStream(socket.getOutputStream())) {
+
+                    new Thread(() -> {
+                        try {
+                            while (true) {
+                                if (input.available() > 0) {
+                                    int xs = input.readInt();
+                                    int ys = input.readInt();
+                                    int zs = input.readInt();
+                                    int ws = input.readInt();
+                                    System.out.println("Received: x=" + xs + ", y=" + ys + ", z=" + zs + ", w=" + ws);
+                                }
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }).start();
+
+                    int prevX = 0, prevY = 0, prevZ = 0, prevW = 0;
+
+                    while (true) {
+                        try {
+                            Thread.sleep(10);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        //  System.out.print("Enter four integers (x y z w): ");
+                        int xs =(int) player.getPosition().x;
+                        int ys = (int) player.getPosition().y;
+                        int zs = (int) player.getPosition().z;
+                        int ws = (int) player.getRotY()%360;
+
+                        if (xs != prevX || ys != prevY || zs != prevZ || ws != prevW) {
+                            output.writeInt(xs);
+                            output.writeInt(ys);
+                            output.writeInt(zs);
+                            output.writeInt(ws);
+
+                            prevX = xs;
+                            prevY = ys;
+                            prevZ = zs;
+                            prevW = ws;
+                        } else {
+                           // System.out.println("Values unchanged. Not sending to server.");
+                        }
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            clientThread.start();
+        });
+        multiplayer.start();
         while (!Display.isCloseRequested()) {
+
             camera.move();
             if(player.getPosition().x>800){
                 player.move(terrain2);
             }else{
                 player.move(terrain1);}
             //player.move(terrain1);
-            System.out.println(player.getPosition().x);
+       //     System.out.println(player.getPosition().x);
             Mrenderer.processEntity(player);
             Mrenderer.processTerrain(terrain1);
             Mrenderer.processTerrain(terrain2);
