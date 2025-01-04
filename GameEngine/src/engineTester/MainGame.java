@@ -1,7 +1,4 @@
 package engineTester;
-
-
-import Multiplayer.ServerAndClient;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
@@ -84,12 +81,12 @@ public class MainGame {
         Random random = new Random();
         float x,y,z;
         for (int i = 0; i < 1000; i++) {
-             x= random.nextFloat(1599);
-             z=random.nextFloat(804);
-             if(x>800){
-                 y = terrain2.getHeightTerrain(x,z);
-             }else{
-             y = terrain1.getHeightTerrain(x,z);}
+            x= random.nextFloat(1599);
+            z=random.nextFloat(804);
+            if(x>800){
+                y = terrain2.getHeightTerrain(x,z);
+            }else{
+                y = terrain1.getHeightTerrain(x,z);}
             entities.add(new Entity(fern, new Vector3f(x,y,z), 0, random.nextFloat(804), 0, 1));
             if (i == 1) {
                 for (int j = 0; j < 150; j++) {
@@ -107,7 +104,7 @@ public class MainGame {
 
         Light light = new Light(vecco, vecpo);
 
-       // ServerAndClient server = new ServerAndClient(player);
+        // ServerAndClient server = new ServerAndClient(player);
 
 
         MasterRender Mrenderer = new MasterRender();
@@ -207,6 +204,7 @@ public class MainGame {
                             while (true) {
                                 if (input.available() > 0) {
                                     int xs = input.readInt();
+                                    player.getPosition().x = xs;
                                     int ys = input.readInt();
                                     int zs = input.readInt();
                                     int ws = input.readInt();
@@ -243,7 +241,7 @@ public class MainGame {
                             prevZ = zs;
                             prevW = ws;
                         } else {
-                           // System.out.println("Values unchanged. Not sending to server.");
+                            // System.out.println("Values unchanged. Not sending to server.");
                         }
                     }
 
@@ -263,7 +261,7 @@ public class MainGame {
             }else{
                 player.move(terrain1);}
             //player.move(terrain1);
-       //     System.out.println(player.getPosition().x);
+            //     System.out.println(player.getPosition().x);
             Mrenderer.processEntity(player);
             Mrenderer.processTerrain(terrain1);
             Mrenderer.processTerrain(terrain2);
