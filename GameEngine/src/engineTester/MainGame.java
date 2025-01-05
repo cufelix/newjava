@@ -278,5 +278,6 @@ public class MainGame {
         Mrenderer.CleanUp();
         loader.cleanUp();
         DisplayManager.closeDisplay();
+        System.exit(0);
     }
 }
