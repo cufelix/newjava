@@ -65,9 +65,13 @@ public class MainGame {
             throw new RuntimeException(e);
         }
         TexturedModel dragonT;
+        TexturedModel enemyT;
+        RawModel enemy;
         try {
             RawModel dragon = OBJLoader.loadObjModel("man", loader);
             dragonT = new TexturedModel(dragon, new ModelTexture(loader.loadTexture("mud")));
+             enemy = OBJLoader.loadObjModel("man", loader);
+            enemyT = new TexturedModel(dragon, new ModelTexture(loader.loadTexture("path")));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -100,7 +104,8 @@ public class MainGame {
                 }
             }
         }
-
+        Entity enemyE = new Entity(enemyT,new Vector3f(800,0,200),0, random.nextFloat(804), 0, 1);
+        entities.add(enemyE);
 
         Light light = new Light(vecco, vecpo);
 
@@ -198,17 +203,18 @@ public class MainGame {
                 try (Socket socket = new Socket(ip, PORT);
                      DataInputStream input = new DataInputStream(socket.getInputStream());
                      DataOutputStream output = new DataOutputStream(socket.getOutputStream())) {
-
+//moje set casts
                     new Thread(() -> {
                         try {
                             while (true) {
                                 if (input.available() > 0) {
                                     int xs = input.readInt();
-                                    player.getPosition().x = xs;
                                     int ys = input.readInt();
                                     int zs = input.readInt();
                                     int ws = input.readInt();
-                                    System.out.println("Received: x=" + xs + ", y=" + ys + ", z=" + zs + ", w=" + ws);
+                                    enemyE.setPosition(new Vector3f(xs,ys,zs));
+                                    enemyE.setRotY(ws);
+                                   // System.out.println("Received: x=" + xs + ", y=" + ys + ", z=" + zs + ", w=" + ws);
                                 }
                             }
                         } catch (IOException e) {
@@ -261,7 +267,7 @@ public class MainGame {
             }else{
                 player.move(terrain1);}
             //player.move(terrain1);
-            //     System.out.println(player.getPosition().x);
+            //     System.out.println(player.getPosition().z);
             Mrenderer.processEntity(player);
             Mrenderer.processTerrain(terrain1);
             Mrenderer.processTerrain(terrain2);
