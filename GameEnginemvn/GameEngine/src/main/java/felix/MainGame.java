@@ -146,10 +146,10 @@ public class MainGame {
 
                         while (true) {
                             if (input1.available() > 0) {
-                                float xs = input1.readInt();
-                                float ys = input1.readInt();
-                                float zs = input1.readInt();
-                                float ws = input1.readInt();
+                                float xs = input1.readFloat();
+                                float ys = input1.readFloat();
+                                float zs = input1.readFloat();
+                                float ws = input1.readFloat();
                                 if (xs != prevX1 || ys != prevY1 || zs != prevZ1 || ws != prevW1) {
                                     prevX1 = xs;
                                     prevY1 = ys;
@@ -163,10 +163,10 @@ public class MainGame {
                             }
 
                             if (input2.available() > 0) {
-                                float xs = input2.readInt();
-                                float ys = input2.readInt();
-                                float zs = input2.readInt();
-                                float ws = input2.readInt();
+                                float xs = input2.readFloat();
+                                float ys = input2.readFloat();
+                                float zs = input2.readFloat();
+                                float ws = input2.readFloat();
                                 if (xs != prevX2 || ys != prevY2 || zs != prevZ2 || ws != prevW2) {
                                     prevX2 = xs;
                                     prevY2 = ys;
@@ -204,15 +204,20 @@ public class MainGame {
                     new Thread(() -> {
                         try {
                             while (true) {
+                                try {
+                                    Thread.sleep(2);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
                                 if (input.available() > 0) {
-                                    float xs = input.readInt();
+                                    float xs = input.readFloat();
                                   //  player.getPosition().x = xs;
-                                    float ys = input.readInt();
-                                    float zs = input.readInt();
-                                    float ws = input.readInt();
+                                    float ys = input.readFloat();
+                                    float zs = input.readFloat();
+                                    float ws = input.readFloat();
                                     enemyE.setPosition(new Vector3f(xs,ys,zs));
                                     enemyE.setRotY(ws);
-                                    // System.out.println("Received: x=" + xs + ", y=" + ys + ", z=" + zs + ", w=" + ws);
+                                     System.out.println("Received: x=" + xs + ", y=" + ys + ", z=" + zs + ", w=" + ws);
                                 }
                             }
                         } catch (IOException e) {
@@ -224,15 +229,15 @@ public class MainGame {
 
                     while (true) {
                         try {
-                            Thread.sleep(3);
+                            Thread.sleep(2);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
                         //  System.out.print("Enter four integers (x y z w): ");
-                        float xs = (int) player.getPosition().x;
-                        float ys = (int) player.getPosition().y;
-                        float zs = (int) player.getPosition().z;
-                        float ws = (int) player.getRotY() % 360;
+                        float xs =  player.getPosition().x;
+                        float ys =  player.getPosition().y;
+                        float zs =  player.getPosition().z;
+                        float ws =  player.getRotY() % 360;
 
                         if (xs != prevX || ys != prevY || zs != prevZ || ws != prevW) {
                             output.writeFloat(xs);
