@@ -64,9 +64,13 @@ public class MainGame {
             throw new RuntimeException(e);
         }
         TexturedModel dragonT;
+        TexturedModel enemyT;
+        RawModel enemy;
         try {
             RawModel dragon = OBJLoader.loadObjModelResource("man", loader);
             dragonT = new TexturedModel(dragon, new ModelTexture(loader.loadTextureResource("mud")));
+            enemy = OBJLoader.loadObjModelResource("man", loader);
+            enemyT = new TexturedModel(dragon, new ModelTexture(loader.loadTextureResource("path")));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -101,7 +105,8 @@ public class MainGame {
                 }
             }
         }
-
+        Entity enemyE = new Entity(enemyT,new Vector3f(800,0,200),0, random.nextFloat(804), 0, 1);
+        entities.add(enemyE);
 
         Light light = new Light(vecco, vecpo);
 
@@ -195,7 +200,7 @@ public class MainGame {
                 try (Socket socket = new Socket(ip, PORT);
                      DataInputStream input = new DataInputStream(socket.getInputStream());
                      DataOutputStream output = new DataOutputStream(socket.getOutputStream())) {
-
+//moje set casts
                     new Thread(() -> {
                         try {
                             while (true) {
@@ -205,7 +210,9 @@ public class MainGame {
                                     int ys = input.readInt();
                                     int zs = input.readInt();
                                     int ws = input.readInt();
-                                    System.out.println("Received: x=" + xs + ", y=" + ys + ", z=" + zs + ", w=" + ws);
+                                    enemyE.setPosition(new Vector3f(xs,ys,zs));
+                                    enemyE.setRotY(ws);
+                                    // System.out.println("Received: x=" + xs + ", y=" + ys + ", z=" + zs + ", w=" + ws);
                                 }
                             }
                         } catch (IOException e) {
