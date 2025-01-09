@@ -266,8 +266,6 @@ public class MainGame {
                 player.move(terrain2);
             }else{
                 player.move(terrain1);}
-            //player.move(terrain1);
-            //     System.out.println(player.getPosition().z);
             Mrenderer.processEntity(player);
             Mrenderer.processTerrain(terrain1);
             Mrenderer.processTerrain(terrain2);
