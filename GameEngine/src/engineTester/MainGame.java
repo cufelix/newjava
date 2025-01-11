@@ -267,7 +267,7 @@ public class MainGame {
             }else{
                 player.move(terrain1);}
             Mrenderer.processEntity(player);
-            Mrenderer.processTerrain(terrain1);
+            Mrenderer.processTerrain(terrain1/*funguje*/);
             Mrenderer.processTerrain(terrain2);
             for (Entity entity : entities) {
                 Mrenderer.processEntity(entity);
