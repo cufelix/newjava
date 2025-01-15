@@ -62,21 +62,28 @@ public class Camera {
 
     private void calculatePitch() {
 
-            if (Mouse.isButtonDown(1)) {
-                float pitchChange = Mouse.getDY() * 0.1f;
+            if (/*Mouse.isButtonDown(1)*/true) {
+                float pitchChange = Mouse.getDY() * 0.099f;
                 float pitchOG = pitch;
                 pitch -= pitchChange;
                 if (pitchOG>pitch && pitch<2){
                     pitch =2;
-                }
 
+                }
+                System.out.println(pitch);
             }
     }
 
     private void calculatePlayerAngleA(){
-        if (Mouse.isButtonDown(0)){
+        if (Mouse.isButtonDown(1)){
             float angleChange = Mouse.getDX() * 0.4f;
             playerAngleA -= angleChange;
+       //     player.setRotY(playerAngleA*1);
+        }
+        else if (true){
+            float angleChange = Mouse.getDX() * 0.4f;
+         //   playerAngleA -= angleChange;
+                 player.setRotY(player.getRotY()-angleChange);
         }
     }
     private float calculateHorizontalDist(){

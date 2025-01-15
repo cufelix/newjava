@@ -31,6 +31,12 @@ public class Player extends Entity{
         float distance = currentSpeed* getFrameTimeSeconds();
         float dx =(float)( distance * Math.sin(Math.toRadians(super.getRotY())));
         float dz =(float)( distance * Math.cos(Math.toRadians(super.getRotY())));
+        float niggaRot = getRotY()%360;
+        if(niggaRot<0){
+            niggaRot=niggaRot+360;
+        }
+        setRotY(niggaRot);
+
           //  System.out.println(getFrameTimeSeconds());
        // System.out.println("dx : "+dx+"  dz: "+dz);
         super.increasePosition(dx,0,dz);
@@ -42,6 +48,7 @@ public class Player extends Entity{
             super.getPosition().y =terrainHeight;
             isInAir=false;
         }
+
     }
     private void checkInputs(){
         if (Keyboard.isKeyDown(Keyboard.KEY_W)) {

@@ -6,6 +6,7 @@ import felix.entities.Light;
 import felix.entities.Player;
 import felix.models.RawModel;
 import felix.models.TexturedModel;
+import felix.shot.Shot;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 import felix.renderEngine.DisplayManager;
@@ -66,6 +67,7 @@ public class MainGame {
         TexturedModel dragonT;
         TexturedModel enemyT;
         RawModel enemy;
+        Entity enemyE;
         try {
             RawModel dragon = OBJLoader.loadObjModelResource("man", loader);
             dragonT = new TexturedModel(dragon, new ModelTexture(loader.loadTextureResource("mud")));
@@ -75,6 +77,7 @@ public class MainGame {
             throw new RuntimeException(e);
         }
         Player player = new Player(dragonT, new Vector3f(800, 30, 200), 0, 0, 0, 1);
+
         Terain terrain1 = new Terain(0, 0, loader, texturePack, blendMap, "heightmap");
         Terain terrain2 = new Terain(1, 0, loader, texturePack, blendMap, "heightmap");
         Vector3f vecpo = new Vector3f(20000, 20000, 2000);
@@ -105,7 +108,7 @@ public class MainGame {
                 }
             }
         }
-        Entity enemyE = new Entity(enemyT,new Vector3f(800,0,200),0, random.nextFloat(804), 0, 1);
+      enemyE = new Entity(enemyT,new Vector3f(800,0,200),0, random.nextFloat(804), 0, 1);
         entities.add(enemyE);
 
         Light light = new Light(vecco, vecpo);
@@ -262,8 +265,11 @@ public class MainGame {
             clientThread.start();
         });
         multiplayer.start();
+        Shot shot = new Shot(player,enemyE);
         while (!Display.isCloseRequested()) {
-
+          // player.setRotY(270);
+          //  System.out.println("Rotace  : "+player.getRotY()+"  |  x : "+player.getPosition().x+"  |  z : "+player.getPosition().z);
+            shot.isThereAShoot();
             camera.move();
             if (player.getPosition().x > 800) {
                 player.move(terrain2);
@@ -284,7 +290,7 @@ public class MainGame {
 
         }
 
-
+        System.exit(0);
         Mrenderer.CleanUp();
         loader.cleanUp();
         DisplayManager.closeDisplay();
