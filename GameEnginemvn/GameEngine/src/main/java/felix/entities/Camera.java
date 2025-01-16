@@ -70,7 +70,7 @@ public class Camera {
                     pitch =2;
 
                 }
-                System.out.println(pitch);
+              //  System.out.println(pitch);
             }
     }
 

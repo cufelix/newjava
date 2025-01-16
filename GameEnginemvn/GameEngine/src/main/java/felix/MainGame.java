@@ -7,6 +7,7 @@ import felix.entities.Player;
 import felix.models.RawModel;
 import felix.models.TexturedModel;
 import felix.shot.Shot;
+import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 import felix.renderEngine.DisplayManager;
@@ -30,6 +31,8 @@ import java.util.Scanner;
 
 public class MainGame {
     private static final int PORT = 6000;
+    static final float killcode = 4853468648.68447648f;
+    static int myScore =0;
 
     public static void main(String[] args) {
 
@@ -115,7 +118,7 @@ public class MainGame {
 
         // ServerAndClient server = new ServerAndClient(player);
 
-
+        Shot shot =new Shot(player,enemyE);
         MasterRender Mrenderer = new MasterRender();
         Camera camera = new Camera(player);
         Thread multiplayer = new Thread(() -> {
@@ -214,6 +217,9 @@ public class MainGame {
                                 }
                                 if (input.available() > 0) {
                                     float xs = input.readFloat();
+                                    if(xs==killcode){
+                                        System.out.println("Deid");
+                                    }
                                   //  player.getPosition().x = xs;
                                     float ys = input.readFloat();
                                     float zs = input.readFloat();
@@ -242,7 +248,20 @@ public class MainGame {
                         float zs =  player.getPosition().z;
                         float ws =  player.getRotY() % 360;
 
+                        if(shot.kill){
+                            xs = killcode;
+                            System.out.println("kill");
+                            long killTime = Sys.getTime();
+                            while (Sys.getTime()<killTime+3000){
+                                System.out.println("kill");
+                            }
+                            shot.kill = false;
+                            myScore++;
+                            System.out.println("Score: " + myScore);
+                        }
+
                         if (xs != prevX || ys != prevY || zs != prevZ || ws != prevW) {
+
                             output.writeFloat(xs);
                             output.writeFloat(ys);
                             output.writeFloat(zs);
@@ -265,7 +284,7 @@ public class MainGame {
             clientThread.start();
         });
         multiplayer.start();
-        Shot shot = new Shot(player,enemyE);
+      //  shot = new Shot(player,enemyE);
         while (!Display.isCloseRequested()) {
           // player.setRotY(270);
           //  System.out.println("Rotace  : "+player.getRotY()+"  |  x : "+player.getPosition().x+"  |  z : "+player.getPosition().z);

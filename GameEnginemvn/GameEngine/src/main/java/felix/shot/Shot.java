@@ -9,6 +9,7 @@ import org.lwjgl.util.vector.Vector2f;
 import static java.lang.Math.sqrt;
 
 public class Shot {
+      public  boolean kill;
     Player player;
     Entity enemyE;
     int numshot;
@@ -35,8 +36,12 @@ public class Shot {
              System.out.println("Position of enemy must be :   "+xvec+"   "+yvec);
 
              System.out.println("Position of enemy is : X:  "+enemyE.getPosition().x+"  Y : "+enemyE.getPosition().z);
-             System.out.println(checkIfHitt((float) xvec,(float) yvec,enemyE.getPosition().x,enemyE.getPosition().z));
-
+            // System.out.println(checkIfHitt((float) xvec,(float) yvec,enemyE.getPosition().x,enemyE.getPosition().z));
+             if(checkIfHitt((float) xvec,(float) yvec,enemyE.getPosition().x,enemyE.getPosition().z)){
+                 kill=true;
+             }else {
+                 kill=false;
+             }
 
 
              System.out.println(vector);
@@ -60,10 +65,7 @@ public class Shot {
         return  dif;
      }
     private static Vector2f createVectorFromAngle(float angleDegrees) {
-        // Convert the angle from degrees to radians
         float angleRadians = (float) Math.toRadians(angleDegrees);
-
-        // Compute the vector components and return as Vector2f
         return new Vector2f((float) Math.cos(angleRadians), (float) Math.sin(angleRadians));
     }
     private boolean checkIfHitt(float expectedPositionX ,float expectedPositionY ,float realPostionX,float realPositionY){
