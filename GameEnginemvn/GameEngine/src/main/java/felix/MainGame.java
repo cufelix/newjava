@@ -33,6 +33,7 @@ public class MainGame {
     private static final int PORT = 6000;
     static final float killcode = 4853468648.68447648f;
     static int myScore =0;
+    static int oponentScore =0;
     static boolean alive = true;
 
     public static void main(String[] args) {
@@ -217,21 +218,20 @@ public class MainGame {
                                     throw new RuntimeException(e);
                                 }
                                 if (input.available() > 0) {
-                                    float xs = input.readFloat();
-                                    if(xs==killcode){
+
+                                    if(input.readFloat()==killcode){
                                         System.out.println("Deid");
-                                        alive = false;
+                                        //alive = false;
                                         System.out.println("Deid has been killed.");
-                                        player.setPosition(new Vector3f(800,0,200));
-                                        try {
-                                            Thread.sleep(3000);
-                                        } catch (InterruptedException e) {
-                                            throw new RuntimeException(e);
-                                        }
-                                        alive = true;
+                                        player.setPosition(new Vector3f(400,0,400));
+                                        oponentScore++;
+                                        System.out.println("Score: " + myScore+"  :  "+oponentScore);
+
+                                        //     alive = true;
 
                                     }else {
                                         //  player.getPosition().x = xs;
+                                        float xs = input.readFloat();
                                         float ys = input.readFloat();
                                         float zs = input.readFloat();
                                         float ws = input.readFloat();
@@ -264,12 +264,13 @@ public class MainGame {
                             xs = killcode;
                             System.out.println("kill");
                             long killTime = Sys.getTime();
-                            while (Sys.getTime()<killTime+3000){
+                            //while (Sys.getTime()<killTime+3000){
                                 System.out.println("kill");
-                            }
+                            //}
                             shot.kill = false;
                             myScore++;
-                            System.out.println("Score: " + myScore);
+                            System.out.println("Score: " + myScore+"  :  "+oponentScore);
+                            player.setPosition(new Vector3f(1200, 0, 400));
 
                         }
 
