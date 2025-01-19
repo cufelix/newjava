@@ -7,7 +7,6 @@ import felix.entities.Player;
 import felix.models.RawModel;
 import felix.models.TexturedModel;
 import felix.shot.Shot;
-import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 import felix.renderEngine.DisplayManager;
@@ -31,10 +30,8 @@ import java.util.Scanner;
 
 public class MainGame {
     private static final int PORT = 6000;
-    static final float killcode = 4853468648.68447648f;
-    static int myScore =0;
-    static int oponentScore =0;
-    static boolean alive = true;
+    static float killcode = 53138.46687413f;
+    static int myscore,oponentscore;
 
     public static void main(String[] args) {
 
@@ -72,7 +69,6 @@ public class MainGame {
         TexturedModel dragonT;
         TexturedModel enemyT;
         RawModel enemy;
-        Entity enemyE;
         try {
             RawModel dragon = OBJLoader.loadObjModelResource("man", loader);
             dragonT = new TexturedModel(dragon, new ModelTexture(loader.loadTextureResource("mud")));
@@ -82,7 +78,6 @@ public class MainGame {
             throw new RuntimeException(e);
         }
         Player player = new Player(dragonT, new Vector3f(800, 30, 200), 0, 0, 0, 1);
-
         Terain terrain1 = new Terain(0, 0, loader, texturePack, blendMap, "heightmap");
         Terain terrain2 = new Terain(1, 0, loader, texturePack, blendMap, "heightmap");
         Vector3f vecpo = new Vector3f(20000, 20000, 2000);
@@ -113,14 +108,14 @@ public class MainGame {
                 }
             }
         }
-      enemyE = new Entity(enemyT,new Vector3f(800,0,200),0, random.nextFloat(804), 0, 1);
+        Entity enemyE = new Entity(enemyT,new Vector3f(800,0,200),0, random.nextFloat(804), 0, 1);
         entities.add(enemyE);
 
         Light light = new Light(vecco, vecpo);
 
         // ServerAndClient server = new ServerAndClient(player);
 
-        Shot shot =new Shot(player,enemyE);
+        Shot shot = new Shot(player,enemyE);
         MasterRender Mrenderer = new MasterRender();
         Camera camera = new Camera(player);
         Thread multiplayer = new Thread(() -> {
@@ -218,27 +213,21 @@ public class MainGame {
                                     throw new RuntimeException(e);
                                 }
                                 if (input.available() > 0) {
-
-                                    if(input.readFloat()==killcode){
-                                        System.out.println("Deid");
-                                        //alive = false;
-                                        System.out.println("Deid has been killed.");
-                                        player.setPosition(new Vector3f(400,0,400));
-                                        oponentScore++;
-                                        System.out.println("Score: " + myScore+"  :  "+oponentScore);
-
-                                        //     alive = true;
-
+                                    float xs = input.readFloat();
+                                    //  player.getPosition().x = xs;
+                                    float ys = input.readFloat();
+                                    float zs = input.readFloat();
+                                    float ws = input.readFloat();
+                                    if(xs==killcode){
+                                        player.setPosition(new Vector3f(400, 0, 400));
+                                        oponentscore++;
+                                        player.setRotY(90);
+                                        System.out.println("died \n score  :  "+myscore+"  :  "+oponentscore);
                                     }else {
-                                        //  player.getPosition().x = xs;
-                                        float xs = input.readFloat();
-                                        float ys = input.readFloat();
-                                        float zs = input.readFloat();
-                                        float ws = input.readFloat();
                                         enemyE.setPosition(new Vector3f(xs, ys, zs));
                                         enemyE.setRotY(ws);
-                                        System.out.println("Received: x=" + xs + ", y=" + ys + ", z=" + zs + ", w=" + ws);
                                     }
+                              //      System.out.println("Received: x=" + xs + ", y=" + ys + ", z=" + zs + ", w=" + ws);
                                 }
                             }
                         } catch (IOException e) {
@@ -255,27 +244,24 @@ public class MainGame {
                             throw new RuntimeException(e);
                         }
                         //  System.out.print("Enter four integers (x y z w): ");
-                        float xs =  player.getPosition().x;
-                        float ys =  player.getPosition().y;
-                        float zs =  player.getPosition().z;
-                        float ws =  player.getRotY() % 360;
-
+                        float xs,ys,zs,ws;
                         if(shot.kill){
-                            xs = killcode;
-                            System.out.println("kill");
-                            long killTime = Sys.getTime();
-                            //while (Sys.getTime()<killTime+3000){
-                                System.out.println("kill");
-                            //}
+                            xs= killcode;
+                            ys =  player.getPosition().y;
+                            zs =  player.getPosition().z;
+                            ws =  player.getRotY() % 360;
                             shot.kill = false;
-                            myScore++;
-                            System.out.println("Score: " + myScore+"  :  "+oponentScore);
+                            myscore++;
                             player.setPosition(new Vector3f(1200, 0, 400));
-
+                            player.setRotY(270);
+                            System.out.println("kill \n score  :  "+myscore+"  :  "+oponentscore);
+                        }else {
+                            xs = player.getPosition().x;
+                            ys = player.getPosition().y;
+                            zs = player.getPosition().z;
+                            ws = player.getRotY() % 360;
                         }
-
                         if (xs != prevX || ys != prevY || zs != prevZ || ws != prevW) {
-
                             output.writeFloat(xs);
                             output.writeFloat(ys);
                             output.writeFloat(zs);
@@ -298,17 +284,15 @@ public class MainGame {
             clientThread.start();
         });
         multiplayer.start();
-      //  shot = new Shot(player,enemyE);
         while (!Display.isCloseRequested()) {
-          // player.setRotY(270);
-          //  System.out.println("Rotace  : "+player.getRotY()+"  |  x : "+player.getPosition().x+"  |  z : "+player.getPosition().z);
-            shot.isThereAShoot();
+
             camera.move();
             if (player.getPosition().x > 800) {
                 player.move(terrain2);
             } else {
                 player.move(terrain1);
             }
+            shot.isThereAShoot();
             //player.move(terrain1);
             //     System.out.println(player.getPosition().x);
             Mrenderer.processEntity(player);
@@ -323,9 +307,11 @@ public class MainGame {
 
         }
 
-        System.exit(0);
+
         Mrenderer.CleanUp();
         loader.cleanUp();
         DisplayManager.closeDisplay();
+        System.exit(0);
     }
+
 }
