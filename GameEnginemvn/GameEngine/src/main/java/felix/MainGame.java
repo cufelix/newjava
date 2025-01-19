@@ -33,6 +33,7 @@ public class MainGame {
     private static final int PORT = 6000;
     static final float killcode = 4853468648.68447648f;
     static int myScore =0;
+    static boolean alive = true;
 
     public static void main(String[] args) {
 
@@ -219,14 +220,25 @@ public class MainGame {
                                     float xs = input.readFloat();
                                     if(xs==killcode){
                                         System.out.println("Deid");
+                                        alive = false;
+                                        System.out.println("Deid has been killed.");
+                                        player.setPosition(new Vector3f(800,0,200));
+                                        try {
+                                            Thread.sleep(3000);
+                                        } catch (InterruptedException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                        alive = true;
+
+                                    }else {
+                                        //  player.getPosition().x = xs;
+                                        float ys = input.readFloat();
+                                        float zs = input.readFloat();
+                                        float ws = input.readFloat();
+                                        enemyE.setPosition(new Vector3f(xs, ys, zs));
+                                        enemyE.setRotY(ws);
+                                        System.out.println("Received: x=" + xs + ", y=" + ys + ", z=" + zs + ", w=" + ws);
                                     }
-                                  //  player.getPosition().x = xs;
-                                    float ys = input.readFloat();
-                                    float zs = input.readFloat();
-                                    float ws = input.readFloat();
-                                    enemyE.setPosition(new Vector3f(xs,ys,zs));
-                                    enemyE.setRotY(ws);
-                                     System.out.println("Received: x=" + xs + ", y=" + ys + ", z=" + zs + ", w=" + ws);
                                 }
                             }
                         } catch (IOException e) {
@@ -258,6 +270,7 @@ public class MainGame {
                             shot.kill = false;
                             myScore++;
                             System.out.println("Score: " + myScore);
+
                         }
 
                         if (xs != prevX || ys != prevY || zs != prevZ || ws != prevW) {
