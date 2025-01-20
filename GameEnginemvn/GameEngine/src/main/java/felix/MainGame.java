@@ -4,10 +4,13 @@ import felix.entities.Camera;
 import felix.entities.Entity;
 import felix.entities.Light;
 import felix.entities.Player;
+import felix.graphicsui.UIRenderer;
+import felix.graphicsui.UItexture;
 import felix.models.RawModel;
 import felix.models.TexturedModel;
 import felix.shot.Shot;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import felix.renderEngine.DisplayManager;
 import felix.renderEngine.Loader;
@@ -50,6 +53,11 @@ public class MainGame {
         TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, bTexture, gTexture);
         TerrainTexture blendMap = new TerrainTexture(loader.loadTextureResource("blendMap"));
 
+        List<UItexture> graphicsui = new ArrayList<UItexture>();
+        UItexture gui = new UItexture(loader.loadTextureResource("mud"),new Vector2f(0.5f,0.5f),new Vector2f(0.25f,0.25f));
+        graphicsui.add(gui);
+
+        UIRenderer uiRenderer = new UIRenderer(loader);
 
         RawModel model = null;
         try {
@@ -301,13 +309,14 @@ public class MainGame {
             for (Entity entity : entities) {
                 Mrenderer.processEntity(entity);
             }
-
+            uiRenderer.render(graphicsui);
             Mrenderer.render(light, camera);
+
             DisplayManager.updateDisplay();
 
         }
 
-
+        uiRenderer.cleanUp();
         Mrenderer.CleanUp();
         loader.cleanUp();
         DisplayManager.closeDisplay();
