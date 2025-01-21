@@ -4,7 +4,7 @@ import felix.shaders.ShaderProgram;
 import org.lwjgl.util.vector.Matrix4f;
 
 public class UIShader extends ShaderProgram {
-    private static final String VERTEX_FILE = "/shaders/guiFragmentShader.txt";
+    private static final String VERTEX_FILE = "/shaders/guiVertexShader.txt";
     private static final String FRAGMENT_FILE = "/shaders/guiFragmentShader.txt";
 
     private int location_transformationMatrix;

@@ -34,7 +34,7 @@ import java.util.Scanner;
 public class MainGame {
     private static final int PORT = 6000;
     static float killcode = 53138.46687413f;
-    static int myscore,oponentscore;
+    static int myscore=8,oponentscore;
 
     public static void main(String[] args) {
 
@@ -53,11 +53,7 @@ public class MainGame {
         TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, bTexture, gTexture);
         TerrainTexture blendMap = new TerrainTexture(loader.loadTextureResource("blendMap"));
 
-        List<UItexture> graphicsui = new ArrayList<UItexture>();
-        UItexture gui = new UItexture(loader.loadTextureResource("mud"),new Vector2f(0.5f,0.5f),new Vector2f(0.25f,0.25f));
-        graphicsui.add(gui);
 
-        UIRenderer uiRenderer = new UIRenderer(loader);
 
         RawModel model = null;
         try {
@@ -292,6 +288,25 @@ public class MainGame {
             clientThread.start();
         });
         multiplayer.start();
+
+        List<UItexture> graphicsui = new ArrayList<UItexture>();
+        UItexture gui = new UItexture(loader.loadTextureResource("scope01"),new Vector2f(0,0.3f),new Vector2f(0.15f,0.25f));
+        UItexture tecky = new UItexture(loader.loadTextureResource("tecky"),new Vector2f(0,0.82f),new Vector2f(0.06f,0.1f));
+        UItexture nulova = new UItexture(loader.loadTextureResource("none"),new Vector2f(-0.115f,0.835f),new Vector2f(0.06f,0.125f));
+        UItexture first = new UItexture(loader.loadTextureResource("0"),new Vector2f(-0.05f,0.835f),new Vector2f(0.06f,0.125f));
+        UItexture second = new UItexture(loader.loadTextureResource("0"),new Vector2f(0.05f,0.835f),new Vector2f(0.06f,0.125f));
+        UItexture third = new UItexture(loader.loadTextureResource("none"),new Vector2f(0.115f,0.835f),new Vector2f(0.06f,0.125f));
+
+
+        graphicsui.add(third);
+        graphicsui.add(gui);
+        graphicsui.add(tecky);
+        graphicsui.add(first);
+        graphicsui.add(nulova);
+        graphicsui.add(second);
+
+        UIRenderer uiRenderer = new UIRenderer(loader);
+
         while (!Display.isCloseRequested()) {
 
             camera.move();
@@ -301,6 +316,7 @@ public class MainGame {
                 player.move(terrain1);
             }
             shot.isThereAShoot();
+            score(loader,nulova,first,second,third);
             //player.move(terrain1);
             //     System.out.println(player.getPosition().x);
             Mrenderer.processEntity(player);
@@ -309,9 +325,9 @@ public class MainGame {
             for (Entity entity : entities) {
                 Mrenderer.processEntity(entity);
             }
-            uiRenderer.render(graphicsui);
-            Mrenderer.render(light, camera);
 
+            Mrenderer.render(light, camera);
+            uiRenderer.render(graphicsui);
             DisplayManager.updateDisplay();
 
         }
@@ -321,6 +337,97 @@ public class MainGame {
         loader.cleanUp();
         DisplayManager.closeDisplay();
         System.exit(0);
+    }
+    public static void score (Loader loader,UItexture first,UItexture second,UItexture third,UItexture fourth){
+        if (myscore<10){
+            first.setTexture(loader.loadTextureResource("none"));
+            switch (myscore){
+                case 0:second.setTexture(loader.loadTextureResource("0"));break;
+                case 1:second.setTexture(loader.loadTextureResource("1"));break;
+                case 2:second.setTexture(loader.loadTextureResource("2"));break;
+                case 3:second.setTexture(loader.loadTextureResource("3"));break;
+                case 4:second.setTexture(loader.loadTextureResource("4"));break;
+                case 5:second.setTexture(loader.loadTextureResource("5"));break;
+                case 6:second.setTexture(loader.loadTextureResource("6"));break;
+                case 7:second.setTexture(loader.loadTextureResource("7"));break;
+                case 8:second.setTexture(loader.loadTextureResource("8"));break;
+                case 9:second.setTexture(loader.loadTextureResource("9"));break;
+            }
+        }else {
+            String numberString = String.valueOf(myscore);
+            char firstDigit = numberString.charAt(0);
+            char secondDigit = numberString.charAt(1);
+            int firstNumber = Character.getNumericValue(firstDigit);
+            int secondNumber = Character.getNumericValue(secondDigit);
+            switch (firstNumber){
+                case 1:first.setTexture(loader.loadTextureResource("1"));break;
+                case 2:first.setTexture(loader.loadTextureResource("2"));break;
+                case 3:first.setTexture(loader.loadTextureResource("3"));break;
+                case 4:first.setTexture(loader.loadTextureResource("4"));break;
+                case 5:first.setTexture(loader.loadTextureResource("5"));break;
+                case 6:first.setTexture(loader.loadTextureResource("6"));break;
+                case 7:first.setTexture(loader.loadTextureResource("7"));break;
+                case 8:first.setTexture(loader.loadTextureResource("8"));break;
+                case 9:first.setTexture(loader.loadTextureResource("9"));break;
+            }
+            switch (secondNumber){
+                case 0:second.setTexture(loader.loadTextureResource("0"));break;
+                case 1:second.setTexture(loader.loadTextureResource("1"));break;
+                case 2:second.setTexture(loader.loadTextureResource("2"));break;
+                case 3:second.setTexture(loader.loadTextureResource("3"));break;
+                case 4:second.setTexture(loader.loadTextureResource("4"));break;
+                case 5:second.setTexture(loader.loadTextureResource("5"));break;
+                case 6:second.setTexture(loader.loadTextureResource("6"));break;
+                case 7:second.setTexture(loader.loadTextureResource("7"));break;
+                case 8:second.setTexture(loader.loadTextureResource("8"));break;
+                case 9:second.setTexture(loader.loadTextureResource("9"));break;
+            }
+
+        }
+        if (oponentscore<10){
+            fourth.setTexture(loader.loadTextureResource("none"));
+            switch (oponentscore){
+                case 0:third.setTexture(loader.loadTextureResource("0"));break;
+                case 1:third.setTexture(loader.loadTextureResource("1"));break;
+                case 2:third.setTexture(loader.loadTextureResource("2"));break;
+                case 3:third.setTexture(loader.loadTextureResource("3"));break;
+                case 4:third.setTexture(loader.loadTextureResource("4"));break;
+                case 5:third.setTexture(loader.loadTextureResource("5"));break;
+                case 6:third.setTexture(loader.loadTextureResource("6"));break;
+                case 7:third.setTexture(loader.loadTextureResource("7"));break;
+                case 8:third.setTexture(loader.loadTextureResource("8"));break;
+                case 9:third.setTexture(loader.loadTextureResource("9"));break;
+            }
+        }else {
+            String numberString = String.valueOf(oponentscore);
+            char firstDigit = numberString.charAt(0);
+            char secondDigit = numberString.charAt(1);
+            int firstNumber = Character.getNumericValue(firstDigit);
+            int secondNumber = Character.getNumericValue(secondDigit);
+            switch (firstNumber){
+                case 1:third.setTexture(loader.loadTextureResource("1"));break;
+                case 2:third.setTexture(loader.loadTextureResource("2"));break;
+                case 3:third.setTexture(loader.loadTextureResource("3"));break;
+                case 4:third.setTexture(loader.loadTextureResource("4"));break;
+                case 5:third.setTexture(loader.loadTextureResource("5"));break;
+                case 6:third.setTexture(loader.loadTextureResource("6"));break;
+                case 7:third.setTexture(loader.loadTextureResource("7"));break;
+                case 8:third.setTexture(loader.loadTextureResource("8"));break;
+                case 9:third.setTexture(loader.loadTextureResource("9"));break;
+            }
+            switch (secondNumber){
+                case 0:fourth.setTexture(loader.loadTextureResource("0"));break;
+                case 1:fourth.setTexture(loader.loadTextureResource("1"));break;
+                case 2:fourth.setTexture(loader.loadTextureResource("2"));break;
+                case 3:fourth.setTexture(loader.loadTextureResource("3"));break;
+                case 4:fourth.setTexture(loader.loadTextureResource("4"));break;
+                case 5:fourth.setTexture(loader.loadTextureResource("5"));break;
+                case 6:fourth.setTexture(loader.loadTextureResource("6"));break;
+                case 7:fourth.setTexture(loader.loadTextureResource("7"));break;
+                case 8:fourth.setTexture(loader.loadTextureResource("8"));break;
+                case 9:fourth.setTexture(loader.loadTextureResource("9"));break;
+            }
+        }
     }
 
 }
