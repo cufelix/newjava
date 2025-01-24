@@ -34,9 +34,23 @@ import java.util.Scanner;
 public class MainGame {
     private static final int PORT = 6000;
     static float killcode = 53138.46687413f;
-    static int myscore=8,oponentscore;
+    static int myscore,oponentscore;
 
     public static void main(String[] args) {
+        System.out.println("                                 ____    __    ____  _______  __        ______   ______   .___  ___.  _______                                \n" +
+                "                                 \\   \\  /  \\  /   / |   ____||  |      /      | /  __  \\  |   \\/   | |   ____|                               \n" +
+                "                                  \\   \\/    \\/   /  |  |__   |  |     |  ,----'|  |  |  | |  \\  /  | |  |__                                  \n" +
+                "                                   \\            /   |   __|  |  |     |  |     |  |  |  | |  |\\/|  | |   __|                                 \n" +
+                "                                    \\    /\\    /    |  |____ |  `----.|  `----.|  `--'  | |  |  |  | |  |____                                \n" +
+                "                                     \\__/  \\__/     |_______||_______| \\______| \\______/  |__|  |__| |_______|                               \n" +
+                "                                                                                                                                             \n" +
+                "   .___________.  ______      .___  ___. ____    ____         _______. __    __    ______     ______   .___________. _______ .______         \n" +
+                "   |           | /  __  \\     |   \\/   | \\   \\  /   /        /       ||  |  |  |  /  __  \\   /  __  \\  |           ||   ____||   _  \\        \n" +
+                "   `---|  |----`|  |  |  |    |  \\  /  |  \\   \\/   /        |   (----`|  |__|  | |  |  |  | |  |  |  | `---|  |----`|  |__   |  |_)  |       \n" +
+                "       |  |     |  |  |  |    |  |\\/|  |   \\_    _/          \\   \\    |   __   | |  |  |  | |  |  |  |     |  |     |   __|  |      /        \n" +
+                "       |  |     |  `--'  |    |  |  |  |     |  |        .----)   |   |  |  |  | |  `--'  | |  `--'  |     |  |     |  |____ |  |\\  \\----.   \n" +
+                "       |__|      \\______/     |__|  |__|     |__|        |_______/    |__|  |__|  \\______/   \\______/      |__|     |_______|| _| `._____|   \n" +
+                "                                                                                                                                             ");
 
         String runtimeNativesPath = new File("natives").getAbsolutePath();
         System.setProperty("org.lwjgl.librarypath", runtimeNativesPath);
@@ -74,14 +88,14 @@ public class MainGame {
         TexturedModel enemyT;
         RawModel enemy;
         try {
-            RawModel dragon = OBJLoader.loadObjModelResource("man", loader);
-            dragonT = new TexturedModel(dragon, new ModelTexture(loader.loadTextureResource("mud")));
+            RawModel dragon = OBJLoader.loadObjModelResource("man3", loader);
+            dragonT = new TexturedModel(dragon, new ModelTexture(loader.loadTextureResource("man3T3")));
             enemy = OBJLoader.loadObjModelResource("man", loader);
             enemyT = new TexturedModel(dragon, new ModelTexture(loader.loadTextureResource("path")));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        Player player = new Player(dragonT, new Vector3f(800, 30, 200), 0, 0, 0, 1);
+        Player player = new Player(dragonT, new Vector3f(800, 30, 200), 0, 0, 0, 6);
         Terain terrain1 = new Terain(0, 0, loader, texturePack, blendMap, "heightmap");
         Terain terrain2 = new Terain(1, 0, loader, texturePack, blendMap, "heightmap");
         Vector3f vecpo = new Vector3f(20000, 20000, 2000);
@@ -112,7 +126,7 @@ public class MainGame {
                 }
             }
         }
-        Entity enemyE = new Entity(enemyT,new Vector3f(800,0,200),0, random.nextFloat(804), 0, 1);
+        Entity enemyE = new Entity(enemyT,new Vector3f(800,0,200),0, random.nextFloat(804), 0, 6);
         entities.add(enemyE);
 
         Light light = new Light(vecco, vecpo);
