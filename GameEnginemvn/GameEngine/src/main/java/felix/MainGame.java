@@ -91,7 +91,7 @@ public class MainGame {
             RawModel dragon = OBJLoader.loadObjModelResource("man3", loader);
             dragonT = new TexturedModel(dragon, new ModelTexture(loader.loadTextureResource("man3T3")));
             enemy = OBJLoader.loadObjModelResource("man", loader);
-            enemyT = new TexturedModel(dragon, new ModelTexture(loader.loadTextureResource("path")));
+            enemyT = new TexturedModel(dragon, new ModelTexture(loader.loadTextureResource("man3T3")));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

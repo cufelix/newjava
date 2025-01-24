@@ -30,10 +30,12 @@ public class EntityRenderer {
         GL20.glEnableVertexAttribArray(0);
         GL20.glEnableVertexAttribArray(1);
         GL20.glEnableVertexAttribArray(2);
+       // GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         ModelTexture texture = model.getTexture();
         if(texture.isHasTransparency()){
             MasterRender.disableCulling();
         }
+       // shader.loadShineVariables(100,100);
         shader.loadFakeLightingVariable(texture.isNeedMoreFakeLight());
         shader.loadShineVariables(texture.getShineDamper(), texture.getReflectivity());
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
