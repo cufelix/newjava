@@ -95,7 +95,7 @@ public class MainGame {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        Player player = new Player(dragonT, new Vector3f(800, 30, 200), 0, 0, 0, 6);
+        Player player = new Player(dragonT, new Vector3f(800, 30, 200), 0, 0, 0, 6.5f);
         Terain terrain1 = new Terain(0, 0, loader, texturePack, blendMap, "heightmap");
         Terain terrain2 = new Terain(1, 0, loader, texturePack, blendMap, "heightmap");
         Vector3f vecpo = new Vector3f(20000, 20000, 2000);
@@ -126,7 +126,7 @@ public class MainGame {
                 }
             }
         }
-        Entity enemyE = new Entity(enemyT,new Vector3f(800,0,200),0, random.nextFloat(804), 0, 6);
+        Entity enemyE = new Entity(enemyT,new Vector3f(800,0,200),0, random.nextFloat(804), 0, 6.5f);
         entities.add(enemyE);
 
         Light light = new Light(vecco, vecpo);
