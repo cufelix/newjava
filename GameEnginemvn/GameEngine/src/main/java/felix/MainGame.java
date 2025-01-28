@@ -302,7 +302,7 @@ public class MainGame {
             clientThread.start();
         });
         multiplayer.start();
-
+        //delam dokumentaci
         List<UItexture> graphicsui = new ArrayList<UItexture>();
         UItexture gui = new UItexture(loader.loadTextureResource("scope01"),new Vector2f(0,0.3f),new Vector2f(0.15f,0.25f));
         UItexture tecky = new UItexture(loader.loadTextureResource("tecky"),new Vector2f(0,0.82f),new Vector2f(0.06f,0.1f));
