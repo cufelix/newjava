@@ -310,7 +310,8 @@ public class MainGame {
         UItexture first = new UItexture(loader.loadTextureResource("0"),new Vector2f(-0.05f,0.835f),new Vector2f(0.06f,0.125f));
         UItexture second = new UItexture(loader.loadTextureResource("0"),new Vector2f(0.05f,0.835f),new Vector2f(0.06f,0.125f));
         UItexture third = new UItexture(loader.loadTextureResource("none"),new Vector2f(0.115f,0.835f),new Vector2f(0.06f,0.125f));
-
+        int nibba =0;//odstranit
+        nibba++;//pak ostranit jen pro testy nechat
 
         graphicsui.add(third);
         graphicsui.add(gui);
