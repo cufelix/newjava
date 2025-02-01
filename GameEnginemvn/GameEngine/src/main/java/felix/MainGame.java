@@ -91,7 +91,7 @@ public class MainGame {
             RawModel dragon = OBJLoader.loadObjModelResource("man3", loader);
             dragonT = new TexturedModel(dragon, new ModelTexture(loader.loadTextureResource("man3T3")));
             enemy = OBJLoader.loadObjModelResource("man", loader);
-            enemyT = new TexturedModel(dragon, new ModelTexture(loader.loadTextureResource("man3T3")));
+            enemyT = new TexturedModel(dragon, new ModelTexture(loader.loadTextureResource("man3T4")));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -149,7 +149,7 @@ public class MainGame {
                 Thread serverThread = new Thread(() -> {
                     try (ServerSocket serverSocket = new ServerSocket(PORT)) {
                         System.out.println("Server started and listening on port " + PORT);
-
+                        player.setPosition(new Vector3f(800, 0, 401));
                         Socket client1 = serverSocket.accept();
                         System.out.println("Client 1 connected");
 
@@ -237,7 +237,7 @@ public class MainGame {
                                     float zs = input.readFloat();
                                     float ws = input.readFloat();
                                     if(xs==killcode){
-                                        player.setPosition(new Vector3f(400, 0, 400));
+                                        player.setPosition(new Vector3f(500, 0, 400));
                                         oponentscore++;
                                         player.setRotY(90);
                                         System.out.println("died \n score  :  "+myscore+"  :  "+oponentscore);
@@ -270,7 +270,7 @@ public class MainGame {
                             ws =  player.getRotY() % 360;
                             shot.kill = false;
                             myscore++;
-                            player.setPosition(new Vector3f(1200, 0, 400));
+                            player.setPosition(new Vector3f(1100, 0, 400));
                             player.setRotY(270);
                             System.out.println("kill \n score  :  "+myscore+"  :  "+oponentscore);
                         }else {
@@ -321,6 +321,7 @@ public class MainGame {
         graphicsui.add(second);
 
         UIRenderer uiRenderer = new UIRenderer(loader);
+
 
         while (!Display.isCloseRequested()) {
 
