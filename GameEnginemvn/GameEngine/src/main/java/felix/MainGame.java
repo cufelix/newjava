@@ -197,6 +197,7 @@ public class MainGame {
                                     output1.writeFloat(ys);
                                     output1.writeFloat(zs);
                                     output1.writeFloat(ws);
+                                    //ff
                                 }
                             }
                         }

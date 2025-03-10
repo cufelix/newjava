@@ -1,4 +1,4 @@
-package raycst02;
+spackage raycst02;
 
 import java.awt.AWTException;
 import java.awt.Color;
